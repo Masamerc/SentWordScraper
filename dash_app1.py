@@ -1,11 +1,12 @@
 import dash
 import dash_core_components as dcc
-
+from dash.dependencies import Input, OutPut
 # Adds html elements
 import dash_html_components as html
 
 dash_app = dash.Dash()
 
+# actual graph itself
 dash_app.layout = html.Div(children=[
     html.H1("Dash Right Here"),
     dcc.Graph(id='example',
