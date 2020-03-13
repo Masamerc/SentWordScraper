@@ -19,9 +19,7 @@ dash_app.layout = html.Div(children=[
             'title': 'Basic Dash Example'
         }
     })
-
-    
-    ]) 
+]) 
 
 
 if __name__ == "__main__":
