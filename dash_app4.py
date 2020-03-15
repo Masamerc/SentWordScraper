@@ -21,10 +21,12 @@ Y = deque(maxlen=20)
 X.append(1)
 Y.append(1)
 
-
-dash_app = dash.Dash(__name__)
+external_stylesheets = ["/static/style.css"]
+dash_app = dash.Dash(__name__, external_stylesheets=external_stylesheets)
 
 dash_app.layout = html.Div(children=[
+
+    html.H1("New Graph", style={"color":"white"}),
     # Grapgh component
     dcc.Graph(
         id='live-graph',
@@ -54,9 +56,14 @@ def update_graph(n):
         mode = 'lines+markers'
     )
 
+    print([data])
+
     return {'data': [data], 'layout': go.Layout(
         xaxis=dict(range=[min(X), max(X)]),
-        yaxis=dict(range=[min(Y), max(Y)])
+        yaxis=dict(range=[min(Y), max(Y)], gridcolor="grey"),
+        title="Interesting Title",
+        plot_bgcolor="black",
+        paper_bgcolor="black",
     )}
 
 

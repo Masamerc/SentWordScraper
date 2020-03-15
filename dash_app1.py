@@ -1,10 +1,12 @@
 import dash
 import dash_core_components as dcc
-from dash.dependencies import Input, OutPut
+from dash.dependencies import Input, Output
 # Adds html elements
 import dash_html_components as html
 
-dash_app = dash.Dash()
+external_stylesheets = ["/static/style.css"]
+dash_app = dash.Dash(external_stylesheets=external_stylesheets)
+
 
 # actual graph itself
 dash_app.layout = html.Div(children=[
@@ -18,6 +20,8 @@ dash_app.layout = html.Div(children=[
         'layout': {
             'title': 'Basic Dash Example'
         }
+    }, style={
+        "backgroundColor":"black"
     })
 ]) 
 

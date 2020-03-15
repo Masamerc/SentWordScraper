@@ -5,6 +5,7 @@ todo:
         General:
                 - Refactor codes with requests module
                 - Hook up the app with a database
+                    - Use pandas - read_sql()
                 - More f-strings
                 - Remove stop words
                 - Generate Report
@@ -14,11 +15,8 @@ todo:
 
         General:
                 - Dash or Chart.js
-                - Watch Dash Tutorial
-
-            Dash:
-                - Sentdex Videos
-
+                - Dash vs Bokeh:
+                    - Dash is easy to use, some documentation available 
 ref:
     - https://pythonise.com/series/learning-flask/flask-rq-task-queue
      
