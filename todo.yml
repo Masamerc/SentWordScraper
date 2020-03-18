@@ -3,20 +3,18 @@ todo:
     Flask_App: 
 
         General:
-                - Refactor codes with requests module
                 - Hook up the app with a database
-                    - Use pandas - read_sql()
+                    - Almost complete: add inserting capability to the task
                 - More f-strings
                 - Remove stop words
-                - Generate Report
-                - Why Task Queue
+                - Generate Report with Pandas 
+                - Sentiment Analysis and Report
 
     Dash_App:
 
         General:
                 - Dash or Chart.js
-                - Dash vs Bokeh:
-                    - Dash is easy to use, some documentation available 
+
 ref:
     - https://pythonise.com/series/learning-flask/flask-rq-task-queue
      
