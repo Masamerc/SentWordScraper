@@ -1,20 +1,23 @@
 todo:
-
     Flask_App: 
-
         General:
                 - Hook up the app with a database
                     - Almost complete: add inserting capability to the task
+                    - Going with SQlite since the data I/O is not huge
                 - More f-strings
                 - Remove stop words
+
+	Database:
+		- Huge data: Go for MongoDB or other non relational database
+		- Secure data: Go for SQLite 3 or other relational database
+
+    Dash_App:
+        General:
+                - Dash or Chart.js
                 - Generate Report with Pandas 
                 - Sentiment Analysis and Report
 
-    Dash_App:
-
-        General:
-                - Dash or Chart.js
-
 ref:
     - https://pythonise.com/series/learning-flask/flask-rq-task-queue
+    - https://towardsdatascience.com/build-your-own-data-dashboard-93e4848a0dcf
      

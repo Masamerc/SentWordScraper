@@ -39,7 +39,6 @@ class ValueInserter:
 executor = ValueInserter(conn)
 
 
-executor.conn.close()
         
         
 ### SCRAPE WEB AND COUNT WORDS ###
@@ -70,3 +69,5 @@ def count_words(url):
     print(word_count.most_common(10))
     print(f'Total Words: {len(word_count)} Time Elapsed: {time_passsed}')
 
+
+executor.conn.close()
