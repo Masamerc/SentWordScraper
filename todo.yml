@@ -3,18 +3,15 @@ todo:
     Flask_App: 
 
         General:
-                - Hook up the app with a database
-                    - Almost complete: add inserting capability to the task
-                - More f-strings
-                - Remove stop words
-                - Generate Report with Pandas 
+                - Refactor code with tokenizer
+                - Remove stop words and special characters
+                - Implement sentence_tokenizer
                 - Sentiment Analysis and Report
+                - Generate Report with Pandas 
 
     Dash_App:
-
         General:
                 - Dash or Chart.js
-
 ref:
     - https://pythonise.com/series/learning-flask/flask-rq-task-queue
      

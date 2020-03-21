@@ -6,18 +6,10 @@ import sqlite3
 import datetime
 
 
+HEADERS = {'User-Agent':'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/76.0.3809.132 Safari/537.36', 'referer':'https://www.google.com/'}
+
 conn = sqlite3.connect("word.db")
 cur = conn.cursor()
-
-cur.execute('''
-CREATE TABLE IF NOT EXISTS words(
-    id INTEGER PRIMARY KEY AUTOINCREMENT,
-    scraped_at timestamp,
-    word TEXT NOT NULL,
-    count INTEGER NOT NULL,
-    source TEXT
-)
-''')
 
 class ValueInserter:
     def __init__(self, conn):
@@ -35,26 +27,34 @@ class ValueInserter:
 
         self.conn.commit()
 
+cur.execute('''
+CREATE TABLE IF NOT EXISTS words(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    scraped_at timestamp,
+    word TEXT NOT NULL,
+    count INTEGER NOT NULL,
+    source TEXT
+)
+''')
+
 
 executor = ValueInserter(conn)
 
-
-executor.conn.close()
-        
         
 ### SCRAPE WEB AND COUNT WORDS ###
 def count_words(url):
+
 
     time.sleep(1)
     print(f"Counting words at {url}")
 
     start = time.time()
-    resp = requests.get(url)
+    resp = requests.get(url, headers=HEADERS)
 
     soup = BeautifulSoup(resp.content, 'html.parser')
 
-    paragraphs = " ".join([p.text for p in soup.find_all('p')])
-    
+    paragraphs = " ".join([p.text.lower() for p in soup.find_all('p')])
+
     # with Counter
     word_count = Counter(paragraphs.split())
     
@@ -67,6 +67,14 @@ def count_words(url):
 
     time_passsed = end - start
 
-    print(word_count.most_common(10))
+    print(f"Inserting Data to Database...")
+
+    for word, count in word_count.items():
+        word = word.strip().replace('.', '').replace('"', '').replace("'", "").replace(',', '')
+        executor.insert((datetime.datetime.now(), word, count, url), "words")
+
+
     print(f'Total Words: {len(word_count)} Time Elapsed: {time_passsed}')
+
+    executor.conn.close()
 
