@@ -3,8 +3,7 @@ todo:
     Flask_App: 
 
         General:
-                - Refactor code with tokenizer
-                - Remove stop words and special characters
+                - Refactor code with tokenizer and emove stop words and special characters
                 - Implement sentence_tokenizer
                 - Sentiment Analysis and Report
                 - Generate Report with Pandas 
