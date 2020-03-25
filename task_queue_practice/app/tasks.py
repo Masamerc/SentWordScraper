@@ -1,12 +1,24 @@
 from bs4 import BeautifulSoup
-from collections import defaultdict, Counter
+from collections import Counter
 import requests
 import time
 import sqlite3
 import datetime
+from nltk import wordpunct_tokenize, sent_tokenize
+from string import punctuation
+import pickle
 
 
 HEADERS = {'User-Agent':'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/76.0.3809.132 Safari/537.36', 'referer':'https://www.google.com/'}
+
+
+addtional_special_chars = ['—', '“', '”']
+stop_words = pickle.load(open("stopwords.pkl", "rb"))
+
+for symbol in addtional_special_chars:
+    punctuation += symbol
+
+######################-Database Initialization-######################
 
 conn = sqlite3.connect("word.db")
 cur = conn.cursor()
@@ -41,11 +53,10 @@ CREATE TABLE IF NOT EXISTS words(
 executor = ValueInserter(conn)
 
         
-### SCRAPE WEB AND COUNT WORDS ###
+######################-Tasks-######################
+
 def count_words(url):
 
-
-    time.sleep(1)
     print(f"Counting words at {url}")
 
     start = time.time()
@@ -55,13 +66,10 @@ def count_words(url):
 
     paragraphs = " ".join([p.text.lower() for p in soup.find_all('p')])
 
-    # with Counter
-    word_count = Counter(paragraphs.split())
-    
-    # with Defaultdict
-    # word_count = defaultdict(int)
-    # for i in paragraphs.split():
-    #     word_count[i] += 1
+    # with tokenizer
+    word_tokenized = wordpunct_tokenize(paragraphs)
+    word_tokenized_cleaned = [word for word in word_tokenized if (word.lower() not in punctuation) and (word.lower() not in stop_words) and (len(word) > 1)]
+    word_count = Counter(word_tokenized_cleaned)
 
     end = time.time()
 
@@ -70,7 +78,6 @@ def count_words(url):
     print(f"Inserting Data to Database...")
 
     for word, count in word_count.items():
-        word = word.strip().replace('.', '').replace('"', '').replace("'", "").replace(',', '')
         executor.insert((datetime.datetime.now(), word, count, url), "words")
 
 
