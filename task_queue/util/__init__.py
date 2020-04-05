@@ -1,1 +1,1 @@
-from .sqlite_wrapper import SqliteWrapper
+from .sqlite_wrapper import SqliteWrapper, ValueInserter
