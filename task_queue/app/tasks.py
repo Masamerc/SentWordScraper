@@ -80,7 +80,6 @@ def count_words(url):
     for word, count in word_count.items():
         executor.insert((datetime.datetime.now(), word, count, url), "words")
 
-
     print(f'Total Words: {len(word_count)} Time Elapsed: {time_passsed}')
 
     executor.conn.close()

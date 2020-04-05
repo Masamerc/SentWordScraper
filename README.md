@@ -18,10 +18,6 @@ todo:
         General:
                 - Dash or Chart.js
                 - Watch Dash Tutorial
-
-            Dash:
-                - Sentdex Videos
-
 ref:
     - "https://pythonise.com/series/learning-flask/flask-rq-task-queue"
 ```
