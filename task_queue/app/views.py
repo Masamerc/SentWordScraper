@@ -62,15 +62,12 @@ def show_result():
 def show_all_results():
 
     if request.args:
-        print("Arg received")
-
         keyword = request.args['keyword']
 
         with SqliteWrapper('word.db') as db:
+            # gets word & count from db
             word_query = db.execute('''select * from words where source LIKE ? 
                                     order by count desc LIMIT 100;''', ("%"+ keyword + "%",))
-
-            
 
             all_words = []
             sources = []
@@ -79,6 +76,7 @@ def show_all_results():
                 ind, ts, word, count, source = data
                 all_words.append((word, count))
 
+            # get matched sources from db
             source_query = db.execute('select source, max(scraped_at) from words where source LIKE ? group by source;', ("%"+ keyword + "%",))
 
             for data in source_query.fetchall():
@@ -86,7 +84,6 @@ def show_all_results():
                 sources.append((source, ts))
 
         message = f"Showing results that matched the keyword: {keyword}"
-        print(sources)
 
         return render_template('all_results.html', all_words=all_words, message=message, sources=sources)
 
@@ -95,14 +92,21 @@ def show_all_results():
             query = db.execute(f'''select * from words 
                                     order by count desc LIMIT 100;''')
             all_words = []
+            sources = []
 
             for data in query.fetchall():
                 ind, ts, word, count, source = data
                 all_words.append((word, count))
 
+            source_query = db.execute('select source, max(scraped_at) from words group by source;')
+
+            for data in source_query.fetchall():
+                source, ts = data
+                sources.append((source, ts))
+
             message = "Showing All Results: No keyword supplied or keyword did not match any source"
 
-    return render_template('all_results.html', all_words=all_words, message=message)
+    return render_template('all_results.html', all_words=all_words, message=message, sources=sources)
 
 
 ############ Route for Testing ############

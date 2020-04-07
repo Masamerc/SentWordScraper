@@ -3,9 +3,14 @@ todo:
         
         Basic Requirements:
             - Show the result after scraping => Done
-            - Show the all results + Keyword search
-                - Keyword search
-                - Table of matched sources 
+            - Show the all results + Keyword search => Done
+                - Keyword search => Done
+                - Table of matched sources and data => Done
+
+            - Table for scrapeed result
+                - copy from 'all-results' html 
+
+            - navbar for Home - All Results
 
 
         General:
