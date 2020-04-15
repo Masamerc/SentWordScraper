@@ -7,18 +7,20 @@ todo:
                 - Keyword search => Done
                 - Table of matched sources and data => Done
 
-            - Table for scrapeed result
-                - copy from 'all-results' html 
+            - Table for scrapeed result => Done
+                - copy from 'all-results' html => Done
 
-            - navbar for Home - All Results
+            - Navbar for Home - All Results => Done
+
+            - Write Sketch
+            - Implement Sentiment Analyzer
 
 
-        General:
+        Requirements:
             - Implement sentence_tokenizer
             - Sentiment Analysis and Report
             - Generate Report with Pandas 
             
-
         UI:
             - Show 5 or 10 recent sources with "SELECT DISTINCT source from words ORDER BY source ASC LIMIT 5;"
             - Show top words from recent sources

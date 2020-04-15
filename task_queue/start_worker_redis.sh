@@ -1,5 +1,8 @@
 #!/bin/bash
 
+# conda activate
+# conda activate firstapp
+
 # activate venv 
 # source ../env/bin/activate
 

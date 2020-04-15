@@ -5,6 +5,7 @@ from app import q
 from flask import render_template, request, redirect, url_for
 from time import strftime 
 from util import SqliteWrapper
+import time
 
 
 @app.route('/')
@@ -29,6 +30,7 @@ def add_task():
             message = f"Task queued at {task.enqueued_at.strftime('%a %d %b %Y %H:%M')}. {q_length} Jobs Queued"
 
             # redirects to "/result" route and pass on "url" 
+            time.sleep(1)
             return redirect(url_for(".show_result", url=url))
 
     return render_template('add_task.html', message=message, jobs=jobs)
@@ -36,24 +38,24 @@ def add_task():
 
 ############ Route Result Screen ############
 
-@app.route('/result')
+@app.route('/result', methods=["GET", "POST"])
 def show_result():
+    
+    # url = 'https://www.npr.org/2020/03/24/820271472/tom-nook-take-me-away-animal-crossing-new-horizons-is-a-perfect-escape'
+    url = request.args['url']
+    # SQL query to get top 30 recorded  words  
+    with SqliteWrapper('word.db') as db:
 
-        url = 'https://www.npr.org/2020/03/24/820271472/tom-nook-take-me-away-animal-crossing-new-horizons-is-a-perfect-escape'
-        # url = request.args['url']
-        
-        # SQL query to get top 30 recorded  words  
-        with SqliteWrapper('word.db') as db:
-            query = db.execute(f'''select * from words where source = ?
-                                    order by count desc LIMIT 30;''', (url,))
-            top_30_words = []
+        query = db.execute(f'''select * from words where source = ?
+                                order by count desc LIMIT 50;''', (url,))
+        top_50_words = []
 
-            for data in query.fetchall():
-                ind, ts, word, count, source = data
-                top_30_words.append((word, count))
-                time_stamp = ts
+        for data in query.fetchall():
+            ind, ts, word, count, source = data
+            top_50_words.append((word, count))
+            time_stamp = ts
 
-        return render_template('result.html', url=url, top_30_words=top_30_words, time_stamp=time_stamp)
+    return render_template('result.html', url=url, top_50_words=top_50_words, len_top_50_words=len(top_50_words), time_stamp=time_stamp)
 
 
 ############ All Results ############
