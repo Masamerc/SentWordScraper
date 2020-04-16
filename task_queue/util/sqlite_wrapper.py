@@ -44,3 +44,22 @@ class ValueInserter:
 
     def close(self):
         self.conn.close()
+
+class SentValueInserter(ValueInserter):
+    def __init__(self, table_name, db_name):
+        super().__init__(table_name, db_name)
+        self.conn = sqlite3.connect(db_name)
+        self.cur = self.conn.cursor()
+        self. cur.execute(f'''
+                        CREATE TABLE IF NOT EXISTS sents(
+                            id INTEGER PRIMARY KEY AUTOINCREMENT,
+                            sentence TEXT NOT NULL,
+                            positive REAL,
+                            neutral REAL,
+                            negative REAL,
+                            compound REAL,
+                            source TEXT,
+                            scraped_at timestamp
+                        )''')
+
+

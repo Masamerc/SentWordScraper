@@ -9,7 +9,7 @@
   <!-- Bootstrap CSS -->
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 
-  <title>Web-scraper Job Queue</title>
+  <title>Sentiment Analysis</title>
 </head>
 
 <body>
@@ -25,10 +25,10 @@
 
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav mr-auto">
-            <li class="nav-item active">
+            <li class="nav-item">
                 <a class="nav-link" href="/add-task">WordScraper</a>
             </li>
-            <li class="nav-item">
+            <li class="nav-item active">
                 <a class="nav-link" href="/add-sent-task">SentScraper</a>
             </li>
 
@@ -41,13 +41,22 @@
 <hr>
 
 
+
+
+
+
+
+
+
+
+
   <div class="container">
     <div class="row">
       <div class="col">
-        <h5 class="mt-3">WordScraper</h5>
+        <h5 class="mt-3">SentScraper</h5>
         <div class="card mt-3">
           <div class="card-body">
-            <form action="/add-task">
+            <form action="/add-sent-task">
               <div class="form-group">
                 <label>Some Description</label>
                 <input type="text" class="form-control" name="url" placeholder="Enter URL" required>

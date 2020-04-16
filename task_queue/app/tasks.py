@@ -6,7 +6,8 @@ import datetime
 from nltk import wordpunct_tokenize, sent_tokenize
 from string import punctuation
 import pickle
-from util import ValueInserter
+from util import ValueInserter, SentValueInserter
+from vaderSentiment.vaderSentiment import SentimentIntensityAnalyzer
 
 
 HEADERS = {'User-Agent':'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/76.0.3809.132 Safari/537.36', 'referer':'https://www.google.com/'}
@@ -18,11 +19,15 @@ stop_words = pickle.load(open("stopwords.pkl", "rb"))
 for symbol in addtional_special_chars:
     punctuation += symbol
 
-executor = ValueInserter(table_name="words", db_name="word.db")
+
+analyzer = SentimentIntensityAnalyzer()
 
 ######################-Tasks-######################
 
+### Word-counter ###
+
 def count_words(url):
+    executor = ValueInserter(table_name="words", db_name="word.db")
 
     print(f"Counting words at {url}")
 
@@ -51,3 +56,24 @@ def count_words(url):
 
     executor.close()
 
+
+### Sentiment Analysis ###
+
+
+def sentiment_analyzer_scores(sentence, url):
+    sent_inserter = SentValueInserter("sents", "word.db")
+    score = analyzer.polarity_scores(sentence)
+    print(f'Analyzing Snetiment from {url}')
+    params = (sentence, score["pos"], score["neu"], score["neg"],score['compound'], url, datetime.datetime.now())
+    sent_inserter.insert(params, 'sents')
+    sent_inserter.close()
+
+
+def print_sentiment(url):
+    resp = requests.get(url, headers=HEADERS)
+    soup = BeautifulSoup(resp.content, 'html.parser')
+    paragraphs = " ".join([p.text for p in soup.find_all('p')])
+    sentences = sent_tokenize(paragraphs)
+
+    for sent in sentences:
+        sentiment_analyzer_scores(sent, url)

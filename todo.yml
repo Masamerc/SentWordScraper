@@ -12,23 +12,25 @@ todo:
 
             - Navbar for Home - All Results => Done
 
-            - Write Sketch
-            - Implement Sentiment Analyzer
+            - Implement Sentiment Analyzer => Done
+                - Definition of Positive and negative sents => Done 
+                    - Compound Score => Done
+                - Create new task =  Sentiment Analyzer => Done
 
 
         Requirements:
-            - Implement sentence_tokenizer
-            - Sentiment Analysis and Report
-            - Generate Report with Pandas 
-            
-        UI:
-            - Show 5 or 10 recent sources with "SELECT DISTINCT source from words ORDER BY source ASC LIMIT 5;"
-            - Show top words from recent sources
+            - Implement sentence_tokenizer => Done
+            - Sentiment Analysis and Report => Done
+            - Create Home Page 
+            - Generate Visualization 
             
                 
     Dash_App:
         General:
                 - Dash or Chart.js
+
+    Future Consideration:
+        - No database
 ref:
     - https://pythonise.com/series/learning-flask/flask-rq-task-queue
      
