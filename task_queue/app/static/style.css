@@ -4,6 +4,11 @@
     overflow: auto;
     }
 
+
+a {
+    color: rgb(112, 0, 241);
+    }
+
 .my-custom-scrollbar2 {
         position: relative;
         height: 300px;
@@ -13,3 +18,22 @@
 .table-wrapper-scroll-y {
     display: block;
     }
+
+.btn-primary {
+    background-color: rgb(86, 16, 151) !important;
+    border: rgb(255, 255, 255) !important;
+    border-width: 2px !important;
+    width: 100px !important;
+    align-content: center !important;
+}
+
+.btn-primary:hover {
+    background-color: rgb(196, 120, 231) !important;
+}
+
+.btn-primary:active {
+    background-color: rgb(112, 0, 241) !important;
+}
+
+
+

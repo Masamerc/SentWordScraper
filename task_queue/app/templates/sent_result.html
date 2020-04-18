@@ -77,6 +77,10 @@
                         {% else %}
                         <h2 style="color: rgb(187, 55, 15);">{{ average_compound }}</h2>
                         {% endif %}
+                        <br>
+                        <h4>Total Sentences</h4>
+                        <hr>
+                        <h2>{{ total_records }}</h2>
                     </div>
                 </div>
 
@@ -94,10 +98,17 @@
                             </thead>
                             {% for sent, compound in top_10_sents %}
                             <tbody>
+                                {% if compound >= 0 %}
                                 <tr>
                                     <td>{{sent}}</td>
-                                    <td>{{compound}}</td>
+                                    <td class="table-success">{{compound}}</td>
                                 </tr>
+                                {% else %}
+                                <tr>
+                                    <td>{{sent}}</td>
+                                    <td class="table-danger">{{compound}}</td>
+                                </tr>
+                                {% endif %}
                             </tbody>
                             {% endfor %}
 
@@ -110,7 +121,7 @@
                     <div class="card-body">
                         <h4>Worst 10</h4>
                         <hr>
-                        <table class="table table-bordered table-striped mb-0 table-sm">
+                        <table class="table table-bordered table-striped table-sm">
                             <thead class="thead-dark">
                                 <tr>
                                     <th>Sentiment</th>
@@ -119,10 +130,17 @@
                             </thead>
                             {% for sent, compound in worst_10_sents %}
                             <tbody>
+                                {% if compound >= 0 %}
                                 <tr>
                                     <td>{{sent}}</td>
-                                    <td>{{compound}}</td>
+                                    <td class="table-success">{{compound}}</td>
                                 </tr>
+                                {% else %}
+                                <tr>
+                                    <td>{{sent}}</td>
+                                    <td class="table-danger">{{compound}}</td>
+                                </tr>
+                                {% endif %}
                             </tbody>
                             {% endfor %}
 
@@ -137,7 +155,7 @@
                         <h4>Result - Showing Top 100 Records</h4>
                         <hr>
                         <div class="table-wrapper-scroll-y my-custom-scrollbar">
-                            <table class="table table-bordered table-striped mb-0 table-sm">
+                            <table class="table table-striped table-bordered table-sm">
                                 <thead class="thead-dark">
                                     <tr>
                                         <th>Sentiment</th>
@@ -146,10 +164,17 @@
                                 </thead>
                                 {% for sent, compound in top_100_sents %}
                                 <tbody>
+                                    {% if compound >= 0 %}
                                     <tr>
                                         <td>{{sent}}</td>
-                                        <td>{{compound}}</td>
+                                        <td class="table-success">{{compound}}</td>
                                     </tr>
+                                    {% else %}
+                                    <tr>
+                                        <td>{{sent}}</td>
+                                        <td class="table-danger">{{compound}}</td>
+                                    </tr>
+                                    {% endif %}
                                 </tbody>
                                 {% endfor %}
 

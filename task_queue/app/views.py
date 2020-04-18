@@ -145,7 +145,7 @@ def show_sent_result():
     with SqliteWrapper('word.db') as db:
 
         query = db.execute(f'''select * from sents where source = ? AND compound != 0
-                                order by compound desc LIMIT 100;''', (url,))
+                                order by compound desc;''', (url,))
         top_100_sents = []
 
         for data in query.fetchall():
@@ -162,7 +162,7 @@ def show_sent_result():
 
     return render_template('sent_result.html', url=url, top_100_sents=top_100_sents,\
                            time_stamp=time_stamp, average_compound=average_compound,\
-                            top_10_sents=top_10_sents, worst_10_sents=worst_10_sents)
+                            top_10_sents=top_10_sents, worst_10_sents=worst_10_sents, total_records=total_records)
 
 
 ############ Route for Testing ############
