@@ -1,20 +1,32 @@
 todo:
-    Flask_App: 
-        General:
-                - Hook up the app with a database
-                    - Almost complete: add inserting capability to the task
-                    - Going with SQlite since the data I/O is not huge
-                - More f-strings
-                - Remove stop words
+    Flask_App:
+        
+        Basic Requirements:
+            - Show the result after scraping => Done
+
+            - Table for scrapeed result => Done
+
+            - Navbar for Home - All Results => Done
+
+            - Implement Sentiment Analyzer => Done
+                - Definition of Positive and negative sents => Done 
+                    - Compound Score => Done
+                - Create new task =  Sentiment Analyzer => Done
 
 
+        Requirements:
+            - Implement sentence_tokenizer => Done
+            - Sentiment Analysis and Report => Done
+            - Create Home Page 
+            - Generate Visualization 
+            
+                
     Dash_App:
         General:
                 - Dash or Chart.js
-                - Generate Report with Pandas 
-                - Sentiment Analysis and Report
 
+    Future Consideration:
+        - No database
 ref:
     - https://pythonise.com/series/learning-flask/flask-rq-task-queue
-    - https://towardsdatascience.com/build-your-own-data-dashboard-93e4848a0dcf
      

@@ -1,0 +1,158 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+    integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+  <link rel="stylesheet" href="static/style.css">
+
+  <title>All Results From Past</title>
+</head>
+
+<body>
+
+  <nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <a class="navbar-brand" href="/" style="font-weight: bold;">WC</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+      aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+
+      <ul class="navbar-nav mr-auto">
+        <li class="nav-item">
+          <a class="nav-link" href="/add-task">Scraper</a>
+        </li>
+
+        <li class="nav-item active">
+          <a class="nav-link" href="/all-results">All Results</a>
+        </li>
+      </ul>
+    </div>
+  </nav>
+  <hr>
+
+
+  <div class="container">
+    <div class="row">
+      <div class="col">
+        <div class="card mt-3">
+          <div class="card-body">
+            <form action="/all-results">
+              <div class="form-group">
+                <label>Search by Keyword</label>
+                <input type="text" class="form-control" name="keyword" placeholder="Enter Keyword">
+              </div>
+              <button type="submit" class="btn btn-primary">Search</button>
+            </form>
+            {% if message %}
+            <small id="emailHelp" class="form-text text-muted">{{ message }}</small>
+            {% endif %}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <br>
+
+  <div class="container">
+
+    <div class="row">
+      <div class="col">
+        <div class="card mt-3">
+          <div class="card-body">
+            <h4>Matched Sources</h4>
+            <hr>
+
+            <div class="table-wrapper-scroll-y my-custom-scrollbar2">
+              <table class="table table-striped table-dark table-bordered table-hover table-sm">
+                <thead class="thead-dark">
+                  <tr>
+                    <th>Mathced Source URL</th>
+                    <th>Scraped at</th>
+                  </tr>
+                </thead>
+
+                {% for source, scraped_at in sources %}
+                <tbody>
+                  <tr>
+                    <td>{{ source }}</td>
+                    <td>{{ scraped_at }}</td>
+                  </tr>
+                </tbody>
+                {% endfor %}
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+    <div class="row">
+      <div class="col">
+        <div class="card mt-3">
+          <div class="card-body">
+            <h4>Result Page</h4>
+            <hr>
+
+            <div class="table-wrapper-scroll-y my-custom-scrollbar">
+              <table class="table table-bordered table-striped mb-0 table-sm">
+                <thead class="thead-dark">
+                  <tr>
+                    <th>word</th>
+                    <th>count</th>
+                  </tr>
+                </thead>
+                {% for word, count in all_words %}
+                <tbody>
+                  <tr>
+
+                    <td>{{word}}</td>
+                    <td>{{count}}</td>
+                  </tr>
+                </tbody>
+                {% endfor %}
+
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- <div class="container">
+    <div class="row">
+      <div class="col">
+        <h5 class="mt-3 mb-3">Job queue</h5>
+        {% if jobs %}
+        {% for job in jobs %}
+        <div class="card mb-3">
+          <div class="card-body">
+            <h6>{{ job.func_name }}</h6>
+            <p>Args: {{ job.args }}</p>
+            <small class="text-muted d-block">Job ID: {{ job.id }}</small>
+            <small class="text-muted d-block">Status: {{ job.status }}</small>
+            <small class="text-muted d-block">Created at: {{ job.created_at.strftime('%a, %d %b %Y %H:%M:%S') }}</small>
+            <small class="text-muted d-block">Enqueued at: {{ job.enqueued_at.strftime('%a, %d %b %Y %H:%M:%S') }}</small>
+          </div>
+        </div>
+        {% endfor %}
+        {% else %}
+        <p>No jobs in the queue</p>
+        {% endif %}
+      </div>
+    </div>
+  </div> -->
+
+</body>
+
+</html>
