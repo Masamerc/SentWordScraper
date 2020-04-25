@@ -7,9 +7,6 @@ todo:
                 - More f-strings
                 - Remove stop words
 
-	Database:
-		- Huge data: Go for MongoDB or other non relational database
-		- Secure data: Go for SQLite 3 or other relational database
 
     Dash_App:
         General:
