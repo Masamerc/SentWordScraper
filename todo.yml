@@ -20,10 +20,9 @@ todo:
             - Create Home Page 
             - Generate Visualization 
             
-                
-    Dash_App:
-        General:
-                - Dash or Chart.js
+        Visualization:
+                - Chart.js
+                    - change bar colors depending on the value (https://stackoverflow.com/questions/35633618/chart-js-bar-chart-color-change-based-on-value)
 
     Future Consideration:
         - No database

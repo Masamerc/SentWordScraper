@@ -1,0 +1,241 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel='stylesheet' href="static/style.css">
+    <title>Result</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
+
+</head>
+
+<body>
+
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <a class="navbar-brand" href="/" style="font-weight: bold;">WC</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+    
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="/add-task">WordScraper</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/add-sent-task">SentScraper</a>
+                </li>
+    
+                <li class="nav-item">
+                    <a class="nav-link" href="/all-results">All Results</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+    <hr>
+    
+
+    <div class="container">
+        <div class="row">
+            <div class="col">
+                <!-- Average Score: Changes color depending on value -->
+                <div class="card mt-3">
+                    <div class="card-body">
+                        <h4>Welcome Page</h4>
+                        <hr>
+                        <a href="/add-task">Scrape Words</a>
+                        <br>
+                        <a href="/add-sent-task">Scrape Sentences</a>
+                        <br>
+                        
+                    </div>
+                </div>
+ 
+            </div>
+        </div>
+    <br>
+    <div class="card mt-3">
+        <div class="card-body">
+            <h3>INSET PIE CHART</h3>
+            <p><strong>Positives: </strong>{{ pos_length }}</p>
+            <p><strong>Negatives: </strong>{{ neg_length }}</p>
+        <div class="chart">
+            <canvas id="summaryPie"></canvas>
+        </div>
+        </div>
+    </div>
+
+
+    <div class="card mt-3">
+        <div class="card-body">
+            <h4>Top 10</h4>
+            <hr>
+            <table class="table table-bordered table-striped mb-0 table-sm">
+                <thead class="thead-dark">
+                    <tr>
+                        <th>Sentiment</th>
+                        <th>Compound Score</th>
+                    </tr>
+                </thead>
+                {% for sent, compound in top_10_sents %}
+                <tbody>
+                    {% if compound >= 0 %}
+                    <tr>
+                        <td>{{sent}}</td>
+                        <td class="table-success">{{compound}}</td>
+                    </tr>
+                    {% else %}
+                    <tr>
+                        <td>{{sent}}</td>
+                        <td class="table-danger">{{compound}}</td>
+                    </tr>
+                    {% endif %}
+                </tbody>
+                {% endfor %}
+
+            </table>
+            <br>
+            <div class="chart">
+                <canvas id="posChart"></canvas>
+            </div>
+
+        </div>
+    </div>
+
+
+    <div class="card mt-3">
+        <div class="card-body">
+            <h4>Worst 10</h4>
+            <hr>
+            <table class="table table-bordered table-striped table-sm">
+                <thead class="thead-dark">
+                    <tr>
+                        <th>Sentiment</th>
+                        <th>Compound Score</th>
+                    </tr>
+                </thead>
+                {% for sent, compound in worst_10_sents %}
+                <tbody>
+                    {% if compound >= 0 %}
+                    <tr>
+                        <td>{{sent}}</td>
+                        <td class="table-success">{{compound}}</td>
+                    </tr>
+                    {% else %}
+                    <tr>
+                        <td>{{sent}}</td>
+                        <td class="table-danger">{{compound}}</td>
+                    </tr>
+                    {% endif %}
+                </tbody>
+                {% endfor %}
+            </table>
+
+            <div class="char">
+                <canvas id='negChart'></canvas>
+            </div>
+        </div>
+    </div>
+
+
+
+</body>
+<script>
+
+    // Pie Chart
+    pieData = {
+        datasets: [{
+            data: [
+                {{ pos_length }},
+                {{ neg_length }}
+            ],
+            backgroundColor: [  
+            '#56AC4F',
+            '#B61626'
+        ]
+        }],
+
+        labels: [
+            'Positve Sentiments',
+            'Negative Sentiments'
+        ]
+    };
+
+    var summaryPieChart = document.getElementById('summaryPie').getContext('2d');
+    var chart = new Chart(summaryPieChart, {
+        type: "pie",
+        data: pieData,
+        borderColor: '#6B6B6B',
+        options: []
+
+    });
+
+
+
+
+    var positiveChart = document.getElementById('posChart').getContext('2d');
+    var chart = new Chart(positiveChart, {
+    // The type of chart we want to create
+    type: 'bar',
+
+    // The data for our dataset
+    data: {
+        labels: [
+            {% for sent, compound in top_10_sents %}
+            "{{ sent[:5]}}...",
+            {% endfor %}
+        ],
+        datasets: [{
+            label: 'Sentiment Score',
+            backgroundColor: '#56AC4F',
+            borderColor: '#6B6B6B',
+            data: [
+            {% for sent, compound in top_10_sents %}
+            {{ compound }},
+            {% endfor %}
+            ]
+        }]
+    },
+
+    // Configuration options go here
+    options: {}
+    });
+
+
+    var negativeChart = document.getElementById('negChart').getContext('2d');
+    var chart = new Chart(negativeChart, {
+    // The type of chart we want to create
+    type: 'bar',
+
+    // The data for our dataset
+    data: {
+        labels: [
+            {% for sent, compound in worst_10_sents %}
+            "{{ sent[:5]}}...",
+            {% endfor %}
+        ],
+        datasets: [{
+            label: 'Sentiment Score',
+            backgroundColor: '#B61626',
+            borderColor: '6B6B6B',
+            data: [
+            {% for sent, compound in worst_10_sents %}
+            {{ compound }},
+            {% endfor %}
+            ]
+        }]
+    },
+
+    // Configuration options go here
+    options: {}
+    });
+</script>
+
+</html>

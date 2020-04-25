@@ -1,6 +1,6 @@
 from app import app
 from app import r
-from app.tasks import count_words, print_sentiment
+from app.tasks import count_words, handle_sentiment
 from app import q 
 from flask import render_template, request, redirect, url_for
 from time import strftime 
@@ -167,11 +167,30 @@ def show_sent_result():
 
 @app.route('/test')
 def test():
+    url = 'https://www.politico.com/news/2020/03/20/trump-hypes-unproven-coronavirus-drugs-139525'
+
+    time.sleep(1)
     with SqliteWrapper('word.db') as db:
-        q = db.execute("select * from words LIMIT 5;")
-        result = q.fetchall()
 
-    if result:
-        print(result)
+        query = db.execute(f'''select * from sents where source = ? AND compound != 0
+                                order by compound desc;''', (url,))
+        top_100_sents = []
 
-    return "hi"
+        for data in query.fetchall():
+            ind, sent, pos, neu, neg, compound, source, ts = data
+            top_100_sents.append((sent, compound))
+            time_stamp = ts
+
+        total_compound = sum((row[1] for row in top_100_sents))
+        total_records = len(top_100_sents)
+        average_compound = round(total_compound / total_records, 4)
+        total_pos = [row[1] for row in top_100_sents if row[1] >= 0]
+        total_neg = [row[1] for row in top_100_sents if row[1] < 0]
+
+        top_10_sents = top_100_sents[:10]
+        worst_10_sents = top_100_sents[-10:][::-1]
+
+    return render_template('test.html', url=url, top_100_sents=top_100_sents,\
+                        time_stamp=time_stamp, average_compound=average_compound,\
+                        top_10_sents=top_10_sents, worst_10_sents=worst_10_sents, total_records=total_records,\
+                        pos_length=len(total_pos), neg_length=len(total_neg))
