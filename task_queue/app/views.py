@@ -30,7 +30,7 @@ def add_task():
             q_length = len(q)
             message = f"Task queued at {task.enqueued_at.strftime('%a %d %b %Y %H:%M')}. {q_length} Jobs Queued"
 
-            # redirects to "/result" route and pass on "url" 
+            # redirects to "/result" route and pass on "url"
             time.sleep(1)
             return redirect(url_for(".show_result", url=url))
 
@@ -39,10 +39,10 @@ def add_task():
 
 @app.route('/result', methods=["GET", "POST"])
 def show_result():
-    
+
     # url = 'https://www.npr.org/2020/03/24/820271472/tom-nook-take-me-away-animal-crossing-new-horizons-is-a-perfect-escape'
     url = request.args['url']
-    # SQL query to get top 30 recorded  words  
+    # SQL query to get top 30 recorded  words
     with SqliteWrapper('word.db') as db:
 
         query = db.execute(f'''select * from words where source = ?
@@ -67,8 +67,8 @@ def show_all_results():
 
         with SqliteWrapper('word.db') as db:
             # gets word & count from db
-            word_query = db.execute('''select * from words where source LIKE ? 
-                                    order by count desc LIMIT 100;''', ("%"+ keyword + "%",))
+            word_query = db.execute('''select * from words where source LIKE ?
+                                    order by count desc LIMIT 100;''', ("%" + keyword + "%",))
 
             all_words = []
             sources = []
@@ -78,7 +78,7 @@ def show_all_results():
                 all_words.append((word, count))
 
             # get matched sources from db
-            source_query = db.execute('select source, max(scraped_at) from words where source LIKE ? group by source;', ("%"+ keyword + "%",))
+            source_query = db.execute('select source, max(scraped_at) from words where source LIKE ? group by source;', ("%" + keyword + "%",))
 
             for data in source_query.fetchall():
                 source, ts = data
@@ -88,24 +88,22 @@ def show_all_results():
 
         return render_template('all_results.html', all_words=all_words, message=message, sources=sources)
 
-
     with SqliteWrapper('word.db') as db:
-            query = db.execute(f'''select * from words 
-                                    order by count desc LIMIT 100;''')
-            all_words = []
-            sources = []
+        query = db.execute(f'''select * from words
+                                order by count desc LIMIT 100;''')
+        all_words = []
+        sources = []
 
-            for data in query.fetchall():
-                ind, ts, word, count, source = data
-                all_words.append((word, count))
+        for data in query.fetchall():
+            ind, ts, word, count, source = data
+            all_words.append((word, count))
 
-            source_query = db.execute('select source, max(scraped_at) from words group by source;')
+        source_query = db.execute('select source, max(scraped_at) from words group by source;')
+        for data in source_query.fetchall():
+            source, ts = data
+            sources.append((source, ts))
 
-            for data in source_query.fetchall():
-                source, ts = data
-                sources.append((source, ts))
-
-            message = "Showing All Results: No keyword supplied or keyword did not match any source"
+        message = "Showing All Results: No keyword supplied or keyword did not match any source"
 
     return render_template('all_results.html', all_words=all_words, message=message, sources=sources)
 
@@ -123,7 +121,7 @@ def add_sent_task():
         # in html the name attr is "url"
         if request.args.get('url'):
             url = request.args.get('url')
-            task = q.enqueue(print_sentiment, url)
+            task = q.enqueue(handle_sentiment, url)
             jobs = q.jobs
             q_length = len(q)
             message = f"Task queued at {task.enqueued_at.strftime('%a %d %b %Y %H:%M')}. {q_length} Jobs Queued"
@@ -137,11 +135,11 @@ def add_sent_task():
 
 @app.route('/sent-result', methods=["GET", "POST"])
 def show_sent_result():
-    url = 'https://www.politico.com/news/2020/03/20/trump-hypes-unproven-coronavirus-drugs-139525'    
+    url = 'https://www.politico.com/news/2020/03/20/trump-hypes-unproven-coronavirus-drugs-139525'
     # url = request.args['url']
 
     # SQL query to get top 30 recorded  words
-    time.sleep(1)  
+    time.sleep(1)
     with SqliteWrapper('word.db') as db:
 
         query = db.execute(f'''select * from sents where source = ? AND compound != 0
@@ -161,8 +159,8 @@ def show_sent_result():
         worst_10_sents = top_100_sents[-10:][::-1]
 
     return render_template('sent_result.html', url=url, top_100_sents=top_100_sents,\
-                           time_stamp=time_stamp, average_compound=average_compound,\
-                            top_10_sents=top_10_sents, worst_10_sents=worst_10_sents, total_records=total_records)
+                        time_stamp=time_stamp, average_compound=average_compound,\
+                        top_10_sents=top_10_sents, worst_10_sents=worst_10_sents, total_records=total_records)
 
 
 ############ Route for Testing ############

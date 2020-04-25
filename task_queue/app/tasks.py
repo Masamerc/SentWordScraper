@@ -26,7 +26,9 @@ analyzer = SentimentIntensityAnalyzer()
 
 ### Word-counter ###
 
-def count_words(url):
+
+def count_words(url: str) -> None:
+    """scrape p tags from url and then count and store each word  """
     executor = ValueInserter(table_name="words", db_name="word.db")
 
     print(f"Counting words at {url}")
@@ -60,7 +62,7 @@ def count_words(url):
 ### Sentiment Analysis ###
 
 
-def sentiment_analyzer_scores(sentence, url):
+def score_sentiment(sentence: str, url: str) -> None:
     sent_inserter = SentValueInserter("sents", "word.db")
     score = analyzer.polarity_scores(sentence)
     print(f'Analyzing Snetiment from {url}')
@@ -69,11 +71,11 @@ def sentiment_analyzer_scores(sentence, url):
     sent_inserter.close()
 
 
-def print_sentiment(url):
+def handle_sentiment(url: str) -> None:
     resp = requests.get(url, headers=HEADERS)
     soup = BeautifulSoup(resp.content, 'html.parser')
     paragraphs = " ".join([p.text for p in soup.find_all('p')])
     sentences = sent_tokenize(paragraphs)
 
     for sent in sentences:
-        sentiment_analyzer_scores(sent, url)
+        score_sentiment(sent, url)
