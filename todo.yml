@@ -22,7 +22,7 @@ todo:
             
         Visualization:
                 - Chart.js
-                    - change bar colors depending on the value (https://stackoverflow.com/questions/35633618/chart-js-bar-chart-color-change-based-on-value)
+                    - change bar colors depending on the value (https://stackoverflow.com/questions/35633618/chart-js-bar-chart-color-change-based-on-value) => Done
 
     Future Consideration:
         - No database

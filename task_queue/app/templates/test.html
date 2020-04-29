@@ -11,7 +11,7 @@
         integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <link rel='stylesheet' href="static/style.css">
     <title>Result</title>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
+    <script src="/static/Chart.min.js"></script>
 
 </head>
 
@@ -149,7 +149,8 @@
 </body>
 <script>
 
-    // Pie Chart
+
+    //----------------Pie Chart----------------//
     pieData = {
         datasets: [{
             data: [
@@ -178,14 +179,61 @@
     });
 
 
+    //----------------Top 10 Postive/Negative Bar Chart----------------//
 
+    // Creating Colors Array for Bar Charts
+
+    const top_10_compounds = [
+            {% for sent, compound in top_10_sents %}
+            {{ compound }},
+            {% endfor %}
+            ];
+        
+
+    const top_10_colors = [];
+    
+    for(const compound of top_10_compounds) {
+        if(compound > 0) {
+            top_10_colors.push('#56AC4F')
+        } else {
+            top_10_colors.push('#B61626')
+        }
+    }
+
+
+    const worst_10_compounds = [
+            {% for sent, compound in worst_10_sents %}
+            {{ compound }},
+            {% endfor %}
+            ];
+
+    const worst_10_colors = [];
+
+    for(const compound of worst_10_compounds) {
+        if(compound > 0) {
+            worst_10_colors.push('#56AC4F')
+        } else {
+            worst_10_colors.push('#B61626')
+        }
+    }
+
+
+    // Options for Bar Charts
+    var options = {
+    // All of my other bar chart option here
+    scales: {
+            yAxes: [{
+                ticks: {
+                    beginAtZero:true
+                }
+            }]
+        }
+    };
 
     var positiveChart = document.getElementById('posChart').getContext('2d');
     var chart = new Chart(positiveChart, {
-    // The type of chart we want to create
     type: 'bar',
 
-    // The data for our dataset
     data: {
         labels: [
             {% for sent, compound in top_10_sents %}
@@ -194,7 +242,7 @@
         ],
         datasets: [{
             label: 'Sentiment Score',
-            backgroundColor: '#56AC4F',
+            backgroundColor: top_10_colors,
             borderColor: '#6B6B6B',
             data: [
             {% for sent, compound in top_10_sents %}
@@ -204,8 +252,7 @@
         }]
     },
 
-    // Configuration options go here
-    options: {}
+    options: options
     });
 
 
@@ -223,19 +270,19 @@
         ],
         datasets: [{
             label: 'Sentiment Score',
-            backgroundColor: '#B61626',
+            backgroundColor: worst_10_colors,
             borderColor: '6B6B6B',
             data: [
             {% for sent, compound in worst_10_sents %}
             {{ compound }},
             {% endfor %}
             ]
-        }]
+        }],
     },
 
-    // Configuration options go here
-    options: {}
+    options: options
     });
+
 </script>
 
 </html>
