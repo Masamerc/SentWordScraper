@@ -14,7 +14,7 @@ HEADERS = {'User-Agent':'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/5
 
 
 addtional_special_chars = ['—', '“', '”']
-stop_words = pickle.load(open("stopwords.pkl", "rb"))
+stop_words = pickle.load(open("data/stopwords.pkl", "rb"))
 
 for symbol in addtional_special_chars:
     punctuation += symbol
@@ -22,14 +22,13 @@ for symbol in addtional_special_chars:
 
 analyzer = SentimentIntensityAnalyzer()
 
-######################-Tasks-######################
 
 ### Word-counter ###
 
 
 def count_words(url: str) -> None:
     """scrape p tags from url and then count and store each word  """
-    executor = ValueInserter(table_name="words", db_name="word.db")
+    executor = ValueInserter(table_name="words", db_name="data/word.db")
 
     print(f"Counting words at {url}")
 
@@ -63,7 +62,7 @@ def count_words(url: str) -> None:
 
 
 def score_sentiment(sentence: str, url: str) -> None:
-    sent_inserter = SentValueInserter("sents", "word.db")
+    sent_inserter = SentValueInserter("sents", "data/word.db")
     score = analyzer.polarity_scores(sentence)
     print(f'Analyzing Snetiment from {url}')
     params = (sentence, score["pos"], score["neu"], score["neg"],score['compound'], url, datetime.datetime.now())

@@ -17,15 +17,18 @@ todo:
         Requirements:
             - Implement sentence_tokenizer => Done
             - Sentiment Analysis and Report => Done
-            - Create Home Page 
-            - Generate Visualization 
+            - Create Home Page  
+
             
         Visualization:
-                - Chart.js
+                Chart.js:
                     - change bar colors depending on the value (https://stackoverflow.com/questions/35633618/chart-js-bar-chart-color-change-based-on-value) => Done
+                Cosmetic Changes:
+                    - Change opacity of bars
+                    - Apply better coloring
+                Javascript:
+                    - Refactor Code  
+
 
     Future Consideration:
         - No database
-ref:
-    - https://pythonise.com/series/learning-flask/flask-rq-task-queue
-     

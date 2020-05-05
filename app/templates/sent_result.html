@@ -18,52 +18,36 @@
 <body>
 
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
-        <a class="navbar-brand" href="/" style="font-weight: bold;">WC</a>
+        <a class="navbar-brand" href="/" style="font-weight: bold;">SWS</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
-            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
+          aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
         </button>
     
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul class="navbar-nav mr-auto">
-                <li class="nav-item">
-                    <a class="nav-link" href="/add-task">WordScraper</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="/add-sent-task">SentScraper</a>
-                </li>
-    
-                <li class="nav-item">
-                    <a class="nav-link" href="/all-results">All Results</a>
-                </li>
-            </ul>
+          <ul class="navbar-nav mr-auto">
+            <li class="nav-item">
+              <a class="nav-link" href="/add-task">WordScraper</a>
+            </li>
+            <li class="nav-item active">
+              <a class="nav-link" href="/add-sent-task">SentScraper</a>
+            </li>
+          </ul>
         </div>
-    </nav>
-    <hr>
+      </nav>
     
 
     <div class="container">
         <div class="row">
             <div class="col">
                 <!-- Average Score: Changes color depending on value -->
-                <div class="card mt-3">
-                    <div class="card-body">
-                        <h4>Welcome Page</h4>
-                        <hr>
-                        <a href="/add-task">Scrape Words</a>
-                        <br>
-                        <a href="/add-sent-task">Scrape Sentences</a>
-                        <br>
-                        
-                    </div>
-                </div>
  
-            </div>
-        </div>
+            
     <br>
     <div class="card mt-3">
         <div class="card-body">
-            <h3>INSET PIE CHART</h3>
+            <h4>Positives VS Negatives</h4>
+            <hr>
             <p><strong>Positives: </strong>{{ pos_length }}</p>
             <p><strong>Negatives: </strong>{{ neg_length }}</p>
         <div class="chart">
@@ -110,7 +94,7 @@
     </div>
 
 
-    <div class="card mt-3">
+    <div class="card mt-3" style="padding-bottom: 100px;">
         <div class="card-body">
             <h4>Worst 10</h4>
             <hr>
@@ -144,7 +128,9 @@
         </div>
     </div>
 
-
+    <div class="footer-for-result bg-primary">
+        <p> <strong>Masahiro Mark Fukui | </strong> All features and codes are MIT License</p>
+    </div>
 
 </body>
 <script>
