@@ -10,6 +10,7 @@
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
     integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
   <link rel='stylesheet' href="static/style.css">
+  <script src="/static/Chart.min.js"></script>
   <title>Result</title>
 </head>
 
@@ -66,6 +67,9 @@
           <div class="card-body">
             <h4>Result</h4>
             <hr>
+            <div class="chart">
+              <canvas id="top10"></canvas>
+            </div>
 
             <h5>Total Words: {{ len_top_50_words }}</h5>
             <hr>
@@ -99,5 +103,44 @@
     <p> <strong>Masahiro Mark Fukui | </strong> All features and codes are MIT License</p>
 </div>
 </body>
+<script>
+
+  const options = {
+      // All of my other bar chart option here
+      scales: {
+              yAxes: [{
+                  ticks: {
+                      beginAtZero:true
+                  }
+              }]
+          }
+      };
+
+  const top10Words = [
+    {% for word, count in top_50_words[:10] %}
+    ["{{ word }}", {{ count }}],
+    {% endfor %}
+  ];
+
+  console.log(top10Words);
+  
+  const top10BarChart = document.querySelector("#top10");
+
+  var chart = new Chart(top10BarChart, {
+    type: 'bar',
+
+    data: {
+        labels: top10Words.map(tuple => tuple[0]),
+        datasets: [{
+            label: 'Count',
+            backgroundColor: 'purple',
+            borderColor: '#6B6B6B',
+            data: top10Words.map(tuple => tuple[1])
+        }]
+    },
+
+    options: options
+    });
+</script>
 
 </html>

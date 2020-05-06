@@ -17,7 +17,8 @@ todo:
         Requirements:
             - Implement sentence_tokenizer => Done
             - Sentiment Analysis and Report => Done
-            - Create Home Page  
+            - Create Home Page
+            - Change WordCounter result page
 
             
         Visualization:

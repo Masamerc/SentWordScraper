@@ -39,9 +39,10 @@ def add_task():
 
 @app.route('/result', methods=["GET", "POST"])
 def show_result():
+    time.sleep(3)
 
-    # url = 'https://www.npr.org/2020/03/24/820271472/tom-nook-take-me-away-animal-crossing-new-horizons-is-a-perfect-escape'
-    url = request.args['url']
+    url = 'https://www.npr.org/2020/03/24/820271472/tom-nook-take-me-away-animal-crossing-new-horizons-is-a-perfect-escape'
+    # url = request.args['url']
     # SQL query to get top 30 recorded  words
     with SqliteWrapper('data/word.db') as db:
 
