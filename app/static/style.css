@@ -14,8 +14,14 @@ h4 {
 a {
     color: rgb(112, 0, 241);
     font-size: large;
-    font-weight: bolder;
+    /* font-weight: bolder; */
     }
+
+.main-link a {
+    color: rgb(112, 0, 241);
+    font-size: large;
+    font-weight: bolder;
+}
 
 .my-custom-scrollbar2 {
         position: relative;
@@ -45,7 +51,7 @@ a {
 
 
 .bg-primary {
-    background-color:  rgb(86, 16, 151) !important;
+    background-color:#561097 !important;
 }
 
 .footer {
@@ -53,11 +59,12 @@ a {
     left: 0;
     bottom: 0;
     width: 100%;;
-    color: rgb(199, 191, 191);
+    color: rgb(255, 255, 255);
     text-align: center;
+    margin-top: 50px;
   }
 .footer p {
-    color: rgb(196, 195, 195);
+    color: rgb(255, 255, 255);
     font-size: small;
     padding-top: 10px;
     padding-bottom: -10px;
@@ -68,14 +75,14 @@ a {
     right: 0;
     bottom: 0;
     width: 100%;;
-    color: rgb(199, 191, 191);
+    color: rgb(255, 255, 255);
     text-align: center;
     height: 50px;
-    margin-top: -50px;
+    margin-top: 50px;
   }
 
 .footer-for-result p {
-    color: rgb(196, 195, 195);
+    color: rgb(255, 255, 255);
     font-size: small;
     padding-top: 10px;
     padding-bottom: 10px;

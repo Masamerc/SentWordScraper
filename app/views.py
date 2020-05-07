@@ -139,10 +139,10 @@ def add_sent_task():
 
 @app.route('/sent-result', methods=["GET", "POST"])
 def show_sent_result():
-    url = request.args['url']
-    # url = 'https://www.politico.com/news/2020/03/20/trump-hypes-unproven-coronavirus-drugs-139525'
+    # url = request.args['url']
+    url = 'https://www.politico.com/news/2020/03/20/trump-hypes-unproven-coronavirus-drugs-139525'
 
-    time.sleep(3)
+    time.sleep(2) # change to 3 
     with SqliteWrapper('data/word.db') as db:
 
         query = db.execute(f'''select * from sents where source = ? AND compound != 0
