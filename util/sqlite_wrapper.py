@@ -45,6 +45,7 @@ class ValueInserter:
     def close(self):
         self.conn.close()
 
+
 class SentValueInserter(ValueInserter):
     def __init__(self, table_name, db_name):
         super().__init__(table_name, db_name)
@@ -61,5 +62,3 @@ class SentValueInserter(ValueInserter):
                             source TEXT,
                             scraped_at timestamp
                         )''')
-
-

@@ -1,0 +1,333 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel='stylesheet' href="static/style.css">
+    <title>Result</title>
+    <script src="/static/Chart.min.js"></script>
+
+</head>
+
+<body>
+
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <a class="navbar-brand" href="/" style="font-weight: bold;">SWS</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+          aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+    
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul class="navbar-nav mr-auto">
+            <li class="nav-item">
+              <a class="nav-link" href="/add-task">WordScraper</a>
+            </li>
+            <li class="nav-item active">
+              <a class="nav-link" href="/add-sent-task">SentScraper</a>
+            </li>
+          </ul>
+        </div>
+      </nav>
+    
+
+    <div class="container">
+        <div class="row">
+            <div class="col">
+    
+    <div class="card mt-3">
+        <div class="card-body">
+            <h4 class="mt-3">SentScraper Result</h4>
+            <hr>
+            <div class="table">
+            <table class="table table-striped table-bordered table-hover table-sm">
+                <thead class="thead-dark">
+                <tr>
+                    <th>Source URL</th>
+                    <th>Scraped at</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td><a href="{{ url }}">{{ url }}</a></td>
+                    <td>{{ time_stamp }}</td>
+                </tr>
+                </tbody>
+            </table>
+            </div>
+        </div>
+        </div>
+    
+
+    <div class="card mt-3">
+        <div class="card-body">
+            <h4>Positives VS Negatives</h4>
+            <hr>
+            <p><strong>Positives: </strong>{{ pos_length }}</p>
+            <p><strong>Negatives: </strong>{{ neg_length }}</p>
+        <div class="chart">
+            <canvas id="summaryPie"></canvas>
+        </div>
+        </div>
+    </div>
+
+
+    <div class="card mt-3">
+        <div class="card-body">
+            <h4>Top 10</h4>
+            <hr>
+            <table class="table table-bordered table-striped mb-0 table-sm">
+                <thead class="thead-dark">
+                    <tr>
+                        <th>Sentiment</th>
+                        <th>Compound Score</th>
+                    </tr>
+                </thead>
+                {% for sent, compound in top_10_sents %}
+                <tbody>
+                    {% if compound >= 0 %}
+                    <tr>
+                        <td>{{sent}}</td>
+                        <td class="table-success">{{compound}}</td>
+                    </tr>
+                    {% else %}
+                    <tr>
+                        <td>{{sent}}</td>
+                        <td class="table-danger">{{compound}}</td>
+                    </tr>
+                    {% endif %}
+                </tbody>
+                {% endfor %}
+
+            </table>
+            <br>
+            <div class="chart">
+                <canvas id="posChart"></canvas>
+            </div>
+
+        </div>
+    </div>
+
+
+    <div class="card mt-3" style="padding-bottom: 100px;">
+        <div class="card-body">
+            <h4>Worst 10</h4>
+            <hr>
+            <table class="table table-bordered table-striped table-sm">
+                <thead class="thead-dark">
+                    <tr>
+                        <th>Sentiment</th>
+                        <th>Compound Score</th>
+                    </tr>
+                </thead>
+                {% for sent, compound in worst_10_sents %}
+                <tbody>
+                    {% if compound >= 0 %}
+                    <tr>
+                        <td>{{sent}}</td>
+                        <td class="table-success">{{compound}}</td>
+                    </tr>
+                    {% else %}
+                    <tr>
+                        <td>{{sent}}</td>
+                        <td class="table-danger">{{compound}}</td>
+                    </tr>
+                    {% endif %}
+                </tbody>
+                {% endfor %}
+            </table>
+
+            <div class="char">
+                <canvas id='negChart'></canvas>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="card mt-3">
+        <div class="card-body">
+            <h4>All Sentences</h4>
+            <hr>
+            <div class="table-wrapper-scroll-y my-custom-scrollbar">
+            <table class="table table-bordered table-striped mb-0 table-sm">
+                <thead class="thead-dark">
+                    <tr>
+                        <th>Sentiment</th>
+                        <th>Compound Score</th>
+                    </tr>
+                </thead>
+                {% for sent, compound in top_100_sents %}
+                <tbody>
+                    {% if compound >= 0 %}
+                    <tr>
+                        <td>{{sent}}</td>
+                        <td class="table-success">{{compound}}</td>
+                    </tr>
+                    {% else %}
+                    <tr>
+                        <td>{{sent}}</td>
+                        <td class="table-danger">{{compound}}</td>
+                    </tr>
+                    {% endif %}
+                </tbody>
+                {% endfor %}
+            </table>
+        </div>
+
+        </div>
+    </div>
+    </div>
+
+    
+    </div>
+    </div>
+    <br>
+    <div class="footer-for-result bg-primary">
+        <p> <strong>Masahiro Mark Fukui | </strong> All features and codes are licensed under MIT License</p>
+    </div>
+
+</body>
+
+<script>
+    //----------------Pie Chart----------------//
+    pieData = {
+        datasets: [{
+            data: [
+                {{ pos_length }},
+                {{ neg_length }}
+            ],
+            backgroundColor: [  
+            'rgb(90, 214, 100, 0.6)',
+            'rgb(235, 92, 82, 0.6)'
+        ],
+        borderColor: '#6B6B6B',
+        borderWidth: 1
+        }],
+
+        labels: [
+            'Positve Sentiments',
+            'Negative Sentiments'
+        ]
+    };
+
+    const summaryPieChart = document.getElementById('summaryPie').getContext('2d');
+    const chart0 = new Chart(summaryPieChart, {
+        type: "pie",
+        data: pieData,
+        options: []
+
+    });
+
+
+    //----------------Top 10 Postive/Negative Bar Chart----------------//
+
+    // Creating Colors Array for Bar Charts
+
+    const top_10_compounds = [
+            {% for sent, compound in top_10_sents %}
+            {{ compound }},
+            {% endfor %}
+            ];
+        
+
+    const top_10_colors = [];
+    
+    for(const compound of top_10_compounds) {
+        if(compound > 0) {
+            top_10_colors.push('rgb(90, 214, 100, 0.6)')
+        } else {
+            top_10_colors.push('rgb(235, 92, 82, 0.6)')
+        }
+    }
+
+
+    const worst_10_compounds = [
+            {% for sent, compound in worst_10_sents %}
+            {{ compound }},
+            {% endfor %}
+            ];
+
+    const worst_10_colors = [];
+
+    for(const compound of worst_10_compounds) {
+        if(compound > 0) {
+            worst_10_colors.push('rgb(90, 214, 100, 0.6)')
+        } else {
+            worst_10_colors.push('rgb(235, 92, 82, 0.6)')
+        }
+    }
+
+
+ 
+    const options = {
+    scales: {
+            yAxes: [{
+                ticks: {
+                    beginAtZero:true
+                }
+            }]
+        }
+    };
+
+    const positiveChart = document.getElementById('posChart').getContext('2d');
+    let chart1 = new Chart(positiveChart, {
+    type: 'bar',
+
+    data: {
+        labels: [
+            {% for sent, compound in top_10_sents %}
+            "{{ sent[:5]}}...",
+            {% endfor %}
+        ],
+        datasets: [{
+            label: 'Sentiment Score',
+            backgroundColor: top_10_colors,
+            borderColor: '#6B6B6B',
+            borderWidth: 1,
+            data: [
+            {% for sent, compound in top_10_sents %}
+            {{ compound }},
+            {% endfor %}
+            ]
+        }]
+    },
+
+    options: options
+    });
+
+
+    const negativeChart = document.getElementById('negChart').getContext('2d');
+    let chart2 = new Chart(negativeChart, {
+    type: 'bar',
+
+    data: {
+        labels: [
+            {% for sent, compound in worst_10_sents %}
+            "{{ sent[:5]}}...",
+            {% endfor %}
+        ],
+        datasets: [{
+            label: 'Sentiment Score',
+            backgroundColor: worst_10_colors,
+            borderColor: '#6B6B6B',
+            borderWidth: 1,
+            data: [
+            {% for sent, compound in worst_10_sents %}
+            {{ compound }},
+            {% endfor %}
+            ]
+        }],
+    },
+
+    options: options
+    });
+
+</script>
+
+</html>

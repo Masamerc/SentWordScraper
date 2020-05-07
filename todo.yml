@@ -1,32 +1,30 @@
-todo:
-    Flask_App:
-        
+
+    Todo:    
+        Main App:
+            - Create Home Page
+            
+        Javascript:
+            - Refactor Code  
+
+    Future Consideration:
+        - No database
+
+#------------------------------------------------------------------------------------------#
+
+    Done:
+        Requirements:
+            - Implement sentence_tokenizer => Done
+            - Sentiment Analysis and Report => Done
         Basic Requirements:
             - Show the result after scraping => Done
-
             - Table for scrapeed result => Done
-
             - Navbar for Home - All Results => Done
-
             - Implement Sentiment Analyzer => Done
                 - Definition of Positive and negative sents => Done 
                     - Compound Score => Done
                 - Create new task =  Sentiment Analyzer => Done
-
-
-        Requirements:
-            - Implement sentence_tokenizer => Done
-            - Sentiment Analysis and Report => Done
-            - Create Home Page 
-            - Generate Visualization 
-            
-                
-    Dash_App:
-        General:
-                - Dash or Chart.js
-
-    Future Consideration:
-        - No database
-ref:
-    - https://pythonise.com/series/learning-flask/flask-rq-task-queue
-     
+        Visualization:
+            Chart.js:
+                - change bar colors depending on the value => Done
+                - Change opacity of bars => Done
+                - Apply better coloring => Done

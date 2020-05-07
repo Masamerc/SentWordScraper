@@ -1,6 +1,6 @@
 from app import app
 from app import r
-from app.tasks import count_words, print_sentiment
+from app.tasks import count_words, handle_sentiment
 from app import q 
 from flask import render_template, request, redirect, url_for
 from time import strftime 
@@ -39,11 +39,12 @@ def add_task():
 
 @app.route('/result', methods=["GET", "POST"])
 def show_result():
+    time.sleep(3)
 
-    # url = 'https://www.npr.org/2020/03/24/820271472/tom-nook-take-me-away-animal-crossing-new-horizons-is-a-perfect-escape'
-    url = request.args['url']
+    url = 'https://www.npr.org/2020/03/24/820271472/tom-nook-take-me-away-animal-crossing-new-horizons-is-a-perfect-escape'
+    # url = request.args['url']
     # SQL query to get top 30 recorded  words
-    with SqliteWrapper('word.db') as db:
+    with SqliteWrapper('data/word.db') as db:
 
         query = db.execute(f'''select * from words where source = ?
                                 order by count desc LIMIT 50;''', (url,))
@@ -65,7 +66,7 @@ def show_all_results():
     if request.args:
         keyword = request.args['keyword']
 
-        with SqliteWrapper('word.db') as db:
+        with SqliteWrapper('data/word.db') as db:
             # gets word & count from db
             word_query = db.execute('''select * from words where source LIKE ?
                                     order by count desc LIMIT 100;''', ("%" + keyword + "%",))
@@ -88,7 +89,7 @@ def show_all_results():
 
         return render_template('all_results.html', all_words=all_words, message=message, sources=sources)
 
-    with SqliteWrapper('word.db') as db:
+    with SqliteWrapper('data/word.db') as db:
         query = db.execute(f'''select * from words
                                 order by count desc LIMIT 100;''')
         all_words = []
@@ -127,20 +128,22 @@ def add_sent_task():
             message = f"Task queued at {task.enqueued_at.strftime('%a %d %b %Y %H:%M')}. {q_length} Jobs Queued"
 
             # redirects to "/result" route and pass on "url" 
-            time.sleep(1.5)
+            time.sleep(2)
             return redirect(url_for(".show_sent_result", url=url))
 
     return render_template('add_sent_task.html', message=message, jobs=jobs)
 
 
+
+############ Route for Testing ############
+
 @app.route('/sent-result', methods=["GET", "POST"])
 def show_sent_result():
-    url = 'https://www.politico.com/news/2020/03/20/trump-hypes-unproven-coronavirus-drugs-139525'
     # url = request.args['url']
+    url = 'https://www.politico.com/news/2020/03/20/trump-hypes-unproven-coronavirus-drugs-139525'
 
-    # SQL query to get top 30 recorded  words
-    time.sleep(1)
-    with SqliteWrapper('word.db') as db:
+    time.sleep(2) # change to 3 
+    with SqliteWrapper('data/word.db') as db:
 
         query = db.execute(f'''select * from sents where source = ? AND compound != 0
                                 order by compound desc;''', (url,))
@@ -154,24 +157,13 @@ def show_sent_result():
         total_compound = sum((row[1] for row in top_100_sents))
         total_records = len(top_100_sents)
         average_compound = round(total_compound / total_records, 4)
+        total_pos = [row[1] for row in top_100_sents if row[1] >= 0]
+        total_neg = [row[1] for row in top_100_sents if row[1] < 0]
 
         top_10_sents = top_100_sents[:10]
         worst_10_sents = top_100_sents[-10:][::-1]
 
     return render_template('sent_result.html', url=url, top_100_sents=top_100_sents,\
                         time_stamp=time_stamp, average_compound=average_compound,\
-                        top_10_sents=top_10_sents, worst_10_sents=worst_10_sents, total_records=total_records)
-
-
-############ Route for Testing ############
-
-@app.route('/test')
-def test():
-    with SqliteWrapper('word.db') as db:
-        q = db.execute("select * from words LIMIT 5;")
-        result = q.fetchall()
-
-    if result:
-        print(result)
-
-    return "hi"
+                        top_10_sents=top_10_sents, worst_10_sents=worst_10_sents, total_records=total_records,\
+                        pos_length=len(total_pos), neg_length=len(total_neg))

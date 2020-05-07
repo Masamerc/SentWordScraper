@@ -7,9 +7,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
   <!-- Bootstrap CSS -->
-  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+    integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
   <link rel="stylesheet" href="static/style.css">
-  <title>Web-scraper Job Queue</title>
+  <title>Sentiment Analysis</title>
 </head>
 
 <body>
@@ -17,39 +18,35 @@
 
 
   <nav class="navbar navbar-expand-lg navbar-light bg-light">
-    <a class="navbar-brand" href="/" style="font-weight: bold;">WC</a>
+    <a class="navbar-brand" href="/" style="font-weight: bold;">SWS</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
-        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
+      aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
     </button>
 
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
-        <ul class="navbar-nav mr-auto">
-            <li class="nav-item active">
-                <a class="nav-link" href="/add-task">WordScraper</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="/add-sent-task">SentScraper</a>
-            </li>
-
-            <li class="nav-item">
-                <a class="nav-link" href="/all-results">All Results</a>
-            </li>
-        </ul>
+      <ul class="navbar-nav mr-auto">
+        <li class="nav-item">
+          <a class="nav-link" href="/add-task">WordScraper</a>
+        </li>
+        <li class="nav-item active">
+          <a class="nav-link" href="/add-sent-task">SentScraper</a>
+        </li>
+      </ul>
     </div>
-</nav>
-<hr>
+  </nav>
+
 
 
   <div class="container">
     <div class="row">
       <div class="col">
-        <h5 class="mt-3">WordScraper</h5>
+        <h4 class="mt-3">SentScraper</h4>
         <div class="card mt-3">
           <div class="card-body">
-            <form action="/add-task">
+            <form action="/add-sent-task">
               <div class="form-group">
-                <label>Some Description</label>
+                <label>Scrapes texts from URL and analyzes the result. The output will be visualized. <strong style="color: blueviolet;">Have fun!</strong></label>
                 <input type="text" class="form-control" name="url" placeholder="Enter URL" required>
                 {% if message %}
                 <small id="emailHelp" class="form-text text-muted">{{ message }}</small>
@@ -76,7 +73,8 @@
             <small class="text-muted d-block">Job ID: {{ job.id }}</small>
             <small class="text-muted d-block">Status: {{ job.status }}</small>
             <small class="text-muted d-block">Created at: {{ job.created_at.strftime('%a, %d %b %Y %H:%M:%S') }}</small>
-            <small class="text-muted d-block">Enqueued at: {{ job.enqueued_at.strftime('%a, %d %b %Y %H:%M:%S') }}</small>
+            <small class="text-muted d-block">Enqueued at:
+              {{ job.enqueued_at.strftime('%a, %d %b %Y %H:%M:%S') }}</small>
           </div>
         </div>
         {% endfor %}
@@ -86,7 +84,10 @@
       </div>
     </div>
   </div>
-
+  <div class="footer bg-primary">
+    <p> <strong>Masahiro Mark Fukui | </strong> All features and codes are licensed under MIT License</p>
+  </div>
+  
 </body>
 
 </html>

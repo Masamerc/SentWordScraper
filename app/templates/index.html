@@ -16,12 +16,12 @@
 <body>
 
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
-        <a class="navbar-brand" href="/" style="font-weight: bold;">WC</a>
+        <a class="navbar-brand" href="/" style="font-weight: bold;">SWS</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
             aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
-    
+
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav mr-auto">
                 <li class="nav-item">
@@ -30,32 +30,40 @@
                 <li class="nav-item">
                     <a class="nav-link" href="/add-sent-task">SentScraper</a>
                 </li>
-    
-                <li class="nav-item">
-                    <a class="nav-link" href="/all-results">All Results</a>
-                </li>
             </ul>
         </div>
     </nav>
-    <hr>
-    
 
     <div class="container">
         <div class="row">
             <div class="col">
-                <!-- Average Score: Changes color depending on value -->
                 <div class="card mt-3">
                     <div class="card-body">
-                        <h4>Welcome Page</h4>
+                        <h4>SimpleWordScraper</h4>
                         <hr>
-                        <a href="/add-task">Scrape Words</a>
+                        <p>
+                            Hello, this project was created as part my personal fun project.</br>
+                            To achieve the result the following tools / technologies are implemented:
+                            <ul>
+                                <li><strong>Python Flask</strong>: Backend Server</li>
+                                <li><strong>Python Beautiful Soup</strong>: Webscraper</li>
+                                <li><strong>Chart.js</strong>: Data Visualization</li>
+                            </ul> 
+                        </p>
+                        <hr>
+                        <span class="main-link"><a href="/add-task">Scrape Words</a></span>
                         <br>
-                        <a href="/add-sent-task">Scrape Sentences</a>
-                        <br>
-                        
+                        <p>
+                            Scrape texts of all p-tags from the supplied URL and then counts words.
+                        </p>
+                        <span class="main-link"><a href="/add-sent-task">Scrape Sentences</a></span>
+                        <p>
+                            Scrape texts of all p-tags from the supplied URL,</br>
+                            analyzes the sentiment of each sentence and then visualizes the result.
+                        </p>
                     </div>
                 </div>
- 
+
             </div>
         </div>
     </div>
@@ -67,14 +75,17 @@
                 <div class="card mt-3">
                     <div class="card-body">
                         <h4>Links</h4>
-                        <image src="{{ url_for('static', filename='/images/images.png') }}"><a href="https://github.com/Masamerc" style="font-weight:bolder;">mygithub</a></image>
+                        <image src="{{ url_for('static', filename='/images/images.png') }}"><a
+                                href="https://github.com/Masamerc" style="font-weight:bolder;">mygithub</a></image>
                     </div>
                 </div>
- 
+
             </div>
         </div>
     </div>
-
+    <div class="footer bg-primary">
+        <p> <strong>Masahiro Mark Fukui | </strong> All features and codes are licensed under MIT License</p>
+    </div>
 </body>
 
 </html>

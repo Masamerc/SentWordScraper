@@ -1,0 +1,90 @@
+.my-custom-scrollbar {
+    position: relative;
+    height: 800px;
+    overflow: auto;
+    }
+body {
+    background-color: rgb(240, 240, 240);
+}
+
+h4 {
+    font-weight: bold;
+}
+
+a {
+    color: rgb(112, 0, 241);
+    font-size: large;
+    /* font-weight: bolder; */
+    }
+
+.main-link a {
+    color: rgb(112, 0, 241);
+    font-size: large;
+    font-weight: bolder;
+}
+
+.my-custom-scrollbar2 {
+        position: relative;
+        height: 300px;
+        overflow: auto;
+        }
+
+.table-wrapper-scroll-y {
+    display: block;
+    }
+
+.btn-primary {
+    background-color: rgb(86, 16, 151) !important;
+    border: rgb(255, 255, 255) !important;
+    border-width: 2px !important;
+    width: 100px !important;
+    align-content: center !important;
+}
+
+.btn-primary:hover {
+    background-color: rgb(196, 120, 231) !important;
+}
+
+.btn-primary:active {
+    background-color: rgb(112, 0, 241) !important;
+}
+
+
+.bg-primary {
+    background-color:#561097 !important;
+}
+
+.footer {
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 100%;;
+    color: rgb(255, 255, 255);
+    text-align: center;
+    margin-top: 50px;
+  }
+.footer p {
+    color: rgb(255, 255, 255);
+    font-size: small;
+    padding-top: 10px;
+    padding-bottom: -10px;
+}
+.footer-for-result {
+    position: relative;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    width: 100%;;
+    color: rgb(255, 255, 255);
+    text-align: center;
+    height: 50px;
+    margin-top: 50px;
+  }
+
+.footer-for-result p {
+    color: rgb(255, 255, 255);
+    font-size: small;
+    padding-top: 10px;
+    padding-bottom: 10px;
+
+}
