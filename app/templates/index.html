@@ -10,13 +10,13 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
         integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <link rel='stylesheet' href="static/style.css">
-    <title>Result</title>
+    <title>SWS - SentWordScraper</title>
 </head>
 
 <body>
 
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
-        <a class="navbar-brand" href="/" style="font-weight: bold;">SWS</a>
+        <a class="navbar-brand logo-image" href="/" style="font-weight: bold;"><img class="logo" src="static/images/logo.png"></a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
             aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
@@ -39,13 +39,15 @@
             <div class="col">
                 <div class="card mt-3">
                     <div class="card-body">
-                        <h4>SimpleWordScraper</h4>
+                        <h4>SentWordScraper</h4>
                         <hr>
-                        <p>
+                        <img class="logo-large" src="static/images/logo.png">
+                        
+                        <p style="text-align: center;">
                             Hello, this project was created as part my personal fun project.</br>
                             To achieve the result the following tools / technologies are implemented:
-                            <ul>
-                                <li><strong>Python Flask</strong>: Backend Server</li>
+                            <ul >
+                                <li style="align-items: center;"><strong>Python Flask</strong>: Backend Server</li>
                                 <li><strong>Python Beautiful Soup</strong>: Webscraper</li>
                                 <li><strong>Chart.js</strong>: Data Visualization</li>
                             </ul> 
@@ -75,7 +77,7 @@
                 <div class="card mt-3">
                     <div class="card-body">
                         <h4>Links</h4>
-                        <image src="{{ url_for('static', filename='/images/images.png') }}"><a
+                        <image class="mylink" src="{{ url_for('static', filename='/images/images.png') }}"><a
                                 href="https://github.com/Masamerc" style="font-weight:bolder;">mygithub</a></image>
                     </div>
                 </div>
