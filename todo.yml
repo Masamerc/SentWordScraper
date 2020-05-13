@@ -4,10 +4,15 @@
             - Create Home Page
             
         Javascript:
-            - Refactor Code  
+            - Refactor Code
+                - turn into object with methods
+                - export as module
 
     Future Consideration:
+        - Docker-compose
         - No database
+            - Redis (https://github.com/dmitrypol/redis101 & https://github.com/dmitrypol/redis_data)
+            - Mongo DB (https://docs.mongodb.com/manual/tutorial/expire-data/)
 
 #------------------------------------------------------------------------------------------#
 

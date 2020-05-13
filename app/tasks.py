@@ -9,6 +9,7 @@ from string import punctuation
 import pickle
 from vaderSentiment.vaderSentiment import SentimentIntensityAnalyzer
 
+# make sure your container's port is mapped: host-> 6378:6379 <- container
 r = Redis(port=6378)
 
 HEADERS = {'User-Agent':'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/76.0.3809.132 Safari/537.36', 'referer':'https://www.google.com/'}
