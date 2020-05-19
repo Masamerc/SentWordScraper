@@ -4,14 +4,15 @@ from app.tasks import count_words, handle_sentiment
 from app import q 
 from flask import render_template, request, redirect, url_for
 from time import strftime 
-from util import SqliteWrapper
+from redis import Redis
 import time
+import pickle
 
+cache_redis = Redis(port=6378)
 
 @app.route('/')
 def index():
     return render_template('index.html')
-
 
 ############ Scrapes Website & Count Words ############
 
@@ -41,19 +42,17 @@ def add_task():
 def show_result():
     time.sleep(3)
 
-    url = 'https://www.npr.org/2020/03/24/820271472/tom-nook-take-me-away-animal-crossing-new-horizons-is-a-perfect-escape'
-    # url = request.args['url']
-    # SQL query to get top 30 recorded  words
-    with SqliteWrapper('data/word.db') as db:
+    url = request.args["url"]
 
-        query = db.execute(f'''select * from words where source = ?
-                                order by count desc LIMIT 50;''', (url,))
-        top_50_words = []
+    # (datetime.datetime(2020, 5, 13, 22, 57, 26, 151155), 'mouth', 1, 'https://www.ign.com/articles/the-invisible-man-review')
+    scraper_result_data = pickle.loads(cache_redis.get("word_count"))
 
-        for data in query.fetchall():
-            ind, ts, word, count, source = data
-            top_50_words.append((word, count))
-            time_stamp = ts
+    top_50_words = []
+    for data in scraper_result_data:
+        ts, word, count, source = data
+        top_50_words.append((word, count))
+        time_stamp = ts
+    top_50_words.sort(key=lambda x: x[1], reverse=True)
 
     return render_template('result.html', url=url, top_50_words=top_50_words, len_top_50_words=len(top_50_words), time_stamp=time_stamp)
 
@@ -143,25 +142,28 @@ def show_sent_result():
     url = 'https://www.politico.com/news/2020/03/20/trump-hypes-unproven-coronavirus-drugs-139525'
 
     time.sleep(2) # change to 3 
-    with SqliteWrapper('data/word.db') as db:
 
-        query = db.execute(f'''select * from sents where source = ? AND compound != 0
-                                order by compound desc;''', (url,))
-        top_100_sents = []
+    sentiment_list_data = pickle.loads(cache_redis.get("sentiment_count"))
+    print(sentiment_list_data)
 
-        for data in query.fetchall():
-            ind, sent, pos, neu, neg, compound, source, ts = data
-            top_100_sents.append((sent, compound))
-            time_stamp = ts
+    top_100_sents = []
 
-        total_compound = sum((row[1] for row in top_100_sents))
-        total_records = len(top_100_sents)
-        average_compound = round(total_compound / total_records, 4)
-        total_pos = [row[1] for row in top_100_sents if row[1] >= 0]
-        total_neg = [row[1] for row in top_100_sents if row[1] < 0]
+    for data in sentiment_list_data:
+        sent, pos, neu, neg, compound, source, ts = data
+        top_100_sents.append((sent, compound))
+        time_stamp = ts
 
-        top_10_sents = top_100_sents[:10]
-        worst_10_sents = top_100_sents[-10:][::-1]
+    top_100_sents.sort(key=lambda x: x[1], reverse=True)
+    top_100_sents = [sent_tuple for sent_tuple in top_100_sents if sent_tuple[1] != 0]
+
+    total_compound = sum((row[1] for row in top_100_sents))
+    total_records = len(top_100_sents)
+    average_compound = round(total_compound / total_records, 4)
+    total_pos = [row[1] for row in top_100_sents if row[1] >= 0]
+    total_neg = [row[1] for row in top_100_sents if row[1] < 0]
+
+    top_10_sents = top_100_sents[:10]
+    worst_10_sents = top_100_sents[-10:][::-1]
 
     return render_template('sent_result.html', url=url, top_100_sents=top_100_sents,\
                         time_stamp=time_stamp, average_compound=average_compound,\
