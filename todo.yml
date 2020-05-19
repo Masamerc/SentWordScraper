@@ -10,6 +10,7 @@
 
     Future Consideration:
         - Docker-compose
+        - Mongo-version
         - No database
             - Redis (https://github.com/dmitrypol/redis101 & https://github.com/dmitrypol/redis_data)
             - Mongo DB (https://docs.mongodb.com/manual/tutorial/expire-data/)
