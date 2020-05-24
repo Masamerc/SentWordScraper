@@ -57,56 +57,6 @@ def show_result():
     return render_template('result.html', url=url, top_50_words=top_50_words, len_top_50_words=len(top_50_words), time_stamp=time_stamp)
 
 
-############ All Results ############
-
-@app.route('/all-results', methods=['GET', 'POST'])
-def show_all_results():
-
-    if request.args:
-        keyword = request.args['keyword']
-
-        with SqliteWrapper('data/word.db') as db:
-            # gets word & count from db
-            word_query = db.execute('''select * from words where source LIKE ?
-                                    order by count desc LIMIT 100;''', ("%" + keyword + "%",))
-
-            all_words = []
-            sources = []
-
-            for data in word_query.fetchall():
-                ind, ts, word, count, source = data
-                all_words.append((word, count))
-
-            # get matched sources from db
-            source_query = db.execute('select source, max(scraped_at) from words where source LIKE ? group by source;', ("%" + keyword + "%",))
-
-            for data in source_query.fetchall():
-                source, ts = data
-                sources.append((source, ts))
-
-        message = f"Showing results that matched the keyword: {keyword}"
-
-        return render_template('all_results.html', all_words=all_words, message=message, sources=sources)
-
-    with SqliteWrapper('data/word.db') as db:
-        query = db.execute(f'''select * from words
-                                order by count desc LIMIT 100;''')
-        all_words = []
-        sources = []
-
-        for data in query.fetchall():
-            ind, ts, word, count, source = data
-            all_words.append((word, count))
-
-        source_query = db.execute('select source, max(scraped_at) from words group by source;')
-        for data in source_query.fetchall():
-            source, ts = data
-            sources.append((source, ts))
-
-        message = "Showing All Results: No keyword supplied or keyword did not match any source"
-
-    return render_template('all_results.html', all_words=all_words, message=message, sources=sources)
-
 
 ############ Sentiment Analysis ############
 
