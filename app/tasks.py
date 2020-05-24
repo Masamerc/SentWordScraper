@@ -41,7 +41,7 @@ def count_words(url: str) -> None:
     word_count_list = [(datetime.datetime.now(), word, count, url)
                        for word, count in word_count.items()]
 
-    r.setex("word_count", 60, pickle.dumps(word_count_list))
+    r.setex("ws" + url, 60, pickle.dumps(word_count_list))
     print(f'Total Words: {len(word_count)}')
 
 
@@ -56,4 +56,4 @@ def handle_sentiment(url: str) -> None:
     paragraphs = " ".join([p.text for p in soup.find_all('p')])
     
     sentiment_data_list = [score_sentiment(sent, url) for sent in sent_tokenize(paragraphs)]
-    r.setex("sentiment_count", 60, pickle.dumps(sentiment_data_list))
+    r.setex("ss" + url, 60, pickle.dumps(sentiment_data_list))

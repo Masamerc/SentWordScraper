@@ -30,7 +30,7 @@ img.logo-large {
 img.mylink {
     width: auto;
     height: auto;
-    height: 100px;
+    padding-right: 20px;
 }
 
 a {
@@ -109,4 +109,9 @@ a {
     padding-top: 10px;
     padding-bottom: 10px;
 
+}
+
+a.bottom-link {
+    font-weight: normal;
+    color: rgb(112, 0, 241);
 }

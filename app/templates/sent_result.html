@@ -282,7 +282,7 @@
     data: {
         labels: [
             {% for sent, compound in top_10_sents %}
-            "{{ sent[:5]}}...",
+            "{{ sent[:5].strip() }}",
             {% endfor %}
         ],
         datasets: [{

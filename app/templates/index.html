@@ -16,7 +16,8 @@
 <body>
 
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
-        <a class="navbar-brand logo-image" href="/" style="font-weight: bold;"><img class="logo" src="static/images/logo.png"></a>
+        <a class="navbar-brand logo-image" href="/" style="font-weight: bold;"><img class="logo"
+                src="static/images/logo.png"></a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
             aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
@@ -42,15 +43,17 @@
                         <h4>SentWordScraper</h4>
                         <hr>
                         <img class="logo-large" src="static/images/logo.png">
-                        
+
                         <p style="text-align: center;">
-                            Hello, this project was created as part my personal fun project.</br>
-                            To achieve the result the following tools / technologies are implemented:
-                            <ul >
-                                <li style="align-items: center;"><strong>Python Flask</strong>: Backend Server</li>
-                                <li><strong>Python Beautiful Soup</strong>: Webscraper</li>
-                                <li><strong>Chart.js</strong>: Data Visualization</li>
-                            </ul> 
+                            Hello, this project was created as one of my personal fun projects.</br>
+                            The following tools / technologies are used:
+                        <ul>
+                            <li style="align-items: center;"><strong>Python Flask</strong>: Backend Server</li>
+                            <li><strong>Python Beautiful Soup</strong>: Webscraper</li>
+                            <li><strong>Chart.js</strong>: Data Visualization</li>
+                            <li><strong>Redis</strong>: Task Queue & Cache Database</li>
+
+                        </ul>
                         </p>
                         <hr>
                         <span class="main-link"><a href="/add-task">Scrape Words</a></span>
@@ -77,11 +80,31 @@
                 <div class="card mt-3">
                     <div class="card-body">
                         <h4>Links</h4>
-                        <image class="mylink" src="{{ url_for('static', filename='/images/images.png') }}"><a
-                                href="https://github.com/Masamerc" style="font-weight:bolder;">mygithub</a></image>
+                        <hr>
+                        <div class="row" style="padding-left: 10px;">
+                            <div class=".col-6 .col-sm-3">
+                                <image class="mylink" style="height: 20px;"
+                                    src="{{ url_for('static', filename='/images/GitHub_Logo.png') }}"></image>
+                            </div>
+                            <div class=".col-6 .col-sm-3" style="padding-left: 10px;">
+                                <a class="bottom-link" href="https://github.com/Masamerc/SentWordScraper">GitHub repo
+                                    for this project</a>
+                            </div>
+                        </div>
+                        <br>
+                        <div class="row" style="padding-left: 10px;">
+                            <div class=".col-6 .col-sm-3">
+                                <image class="mylink" style="height: 15px;"
+                                    src="{{ url_for('static', filename='/images/LI-Logo.png') }}"></image>
+                            </div>
+
+                            <div class=".col-6 .col-sm-3">
+                                <a class="bottom-link"
+                                    href="https://www.linkedin.com/in/masahiro-mark-fukui-78388ab1">Linkedin Profile</a>
+                            </div>
+                        </div>
                     </div>
                 </div>
-
             </div>
         </div>
     </div>

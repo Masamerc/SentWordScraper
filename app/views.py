@@ -12,18 +12,20 @@ cache_redis = Redis(port=6378)
 
 @app.route('/')
 def index():
+    """Route to landing page"""
     return render_template('index.html')
 
-############ Scrapes Website & Count Words ############
 
 @app.route('/add-task', methods=["GET", "POST"])
 def add_task():
-    # shows queued jobs
+    """
+    Route to a page where usrs send word-scraping requests.
+    RQ queues up a task defined in tasks.py 
+    """
     jobs = q.jobs
     message = None
 
     if request.args:
-        # in html the name attr is "url"
         if request.args.get('url'):
             url = request.args.get('url')
             task = q.enqueue(count_words, url)
@@ -32,7 +34,7 @@ def add_task():
             message = f"Task queued at {task.enqueued_at.strftime('%a %d %b %Y %H:%M')}. {q_length} Jobs Queued"
 
             # redirects to "/result" route and pass on "url"
-            time.sleep(1)
+            time.sleep(2)
             return redirect(url_for(".show_result", url=url))
 
     return render_template('add_task.html', message=message, jobs=jobs)
@@ -40,12 +42,14 @@ def add_task():
 
 @app.route('/result', methods=["GET", "POST"])
 def show_result():
-    time.sleep(3)
-
     url = request.args["url"]
 
-    # (datetime.datetime(2020, 5, 13, 22, 57, 26, 151155), 'mouth', 1, 'https://www.ign.com/articles/the-invisible-man-review')
-    scraper_result_data = pickle.loads(cache_redis.get("word_count"))
+    while cache_redis.get("ws" + url) == None:
+        time.sleep(0.5)
+        if cache_redis.get("ws" + url):
+            break
+
+    scraper_result_data = pickle.loads(cache_redis.get("ws" + url))
 
     top_50_words = []
     for data in scraper_result_data:
@@ -57,13 +61,8 @@ def show_result():
     return render_template('result.html', url=url, top_50_words=top_50_words, len_top_50_words=len(top_50_words), time_stamp=time_stamp)
 
 
-
-############ Sentiment Analysis ############
-
-
 @app.route('/add-sent-task', methods=["GET", "POST"])
 def add_sent_task():
-    # shows queued jobs
     jobs = q.jobs
     message = None
 
@@ -77,7 +76,6 @@ def add_sent_task():
             message = f"Task queued at {task.enqueued_at.strftime('%a %d %b %Y %H:%M')}. {q_length} Jobs Queued"
 
             # redirects to "/result" route and pass on "url" 
-            time.sleep(2)
             return redirect(url_for(".show_sent_result", url=url))
 
     return render_template('add_sent_task.html', message=message, jobs=jobs)
@@ -88,12 +86,14 @@ def add_sent_task():
 
 @app.route('/sent-result', methods=["GET", "POST"])
 def show_sent_result():
-    # url = request.args['url']
-    url = 'https://www.politico.com/news/2020/03/20/trump-hypes-unproven-coronavirus-drugs-139525'
-
-    time.sleep(2) # change to 3 
-
-    sentiment_list_data = pickle.loads(cache_redis.get("sentiment_count"))
+    url = request.args['url']
+    
+    while cache_redis.get("ss" + url) == None:
+        time.sleep(0.5)
+        if cache_redis.get("ss" + url):
+            break
+    
+    sentiment_list_data = pickle.loads(cache_redis.get("ss" + url))
     print(sentiment_list_data)
 
     top_100_sents = []
