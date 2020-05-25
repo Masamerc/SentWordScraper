@@ -162,7 +162,7 @@
                         <th>Compound Score</th>
                     </tr>
                 </thead>
-                {% for sent, compound in top_100_sents %}
+                {% for sent, compound in scraped_sents %}
                 <tbody>
                     {% if compound >= 0 %}
                     <tr>
@@ -282,7 +282,7 @@
     data: {
         labels: [
             {% for sent, compound in top_10_sents %}
-            "{{ sent[:5]}}...",
+            "{{ sent[:5].strip() }}",
             {% endfor %}
         ],
         datasets: [{
