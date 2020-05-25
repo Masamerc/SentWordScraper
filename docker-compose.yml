@@ -1,0 +1,14 @@
+version: "3"
+services:
+    redis0:
+        image: "redis"
+        ports:
+            - "6378:6379"
+
+    redis1:
+        image: "redis"
+        ports:
+            - "6379:6379"
+
+    # redis-queue:
+    #     image: "python3:alpine"
