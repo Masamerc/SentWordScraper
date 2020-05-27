@@ -9,7 +9,7 @@ from redis import Redis
 from time import strftime
 
 
-cache_redis = Redis(host="redis0", port=6378)
+cache_redis = Redis(host="redis0", port=6379)
 
 
 @app.route('/')

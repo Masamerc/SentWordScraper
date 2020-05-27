@@ -1,7 +1,0 @@
-redis
-vaderSentiment
-nltk
-bs4
-requests
-rq
-flask
