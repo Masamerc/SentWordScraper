@@ -4,8 +4,6 @@ Todo:
             - turn into object with methods
             - export as module
 
-    Persistence:
-        - Mongo-DB implementation
-
-    docker-compose:
-        - python rq container
+    Main:
+        - Write Readme.md
+        
