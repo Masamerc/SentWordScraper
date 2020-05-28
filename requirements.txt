@@ -1,0 +1,7 @@
+flask
+rq
+redis
+bs4
+nltk
+vaderSentiment
+requests
