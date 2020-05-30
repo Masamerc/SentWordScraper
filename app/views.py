@@ -10,7 +10,7 @@ from redis import Redis
 from time import strftime
 
 
-cache_redis = Redis(port=6378)
+cache_redis = Redis(host="redis0", port=6379)
 
 
 @app.route('/')
@@ -72,6 +72,15 @@ def show_result():
             break
     wordcloud_image_name = cache_redis.get("ws" + url + "filename")
     wordcloud_image_name = wordcloud_image_name.decode("utf-8")
+
+    while cache_redis.get("ws" + url + "wc") is None:
+        time.sleep(0.1)
+        if cache_redis.get("ws" + url + "wc"):
+            break
+
+    wc_obj = pickle.loads(cache_redis.get("ws" + url + "wc"))
+    wc_obj.to_file(f"/usr/src/app/app/static/images/wordcloud_images/{wordcloud_image_name}.png")
+    print(f"location: /usr/src/app/app/static/images/wordcloud_images/{wordcloud_image_name}.png")
 
 
     return render_template('result.html', url=url, scraped_words=scraped_words, time_stamp=time_stamp, image_name=wordcloud_image_name)

@@ -15,7 +15,7 @@ import numpy as np
 from PIL import Image
 from wordcloud import WordCloud
 
-cache_redis = Redis(port=6378)
+cache_redis = Redis(host="redis0", port=6379)
 
 HEADERS = {
     'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/76.0.3809.132 Safari/537.36',
@@ -63,10 +63,10 @@ def count_words(url: str) -> None:
 
     # generate and save wordcloud
     wc = generate_masked_wordcloud(word_count)
-    wc.to_file(f"app/static/images/wordcloud_images/{file_id}.png")
-
+    
     # sending wordcloud file_id for retrieval in Flask view 
     cache_redis.setex("ws" + url + "filename", 60, str(file_id))
+    cache_redis.setex("ws" + url + "wc", 60, pickle.dumps(wc))
 
 
 def score_sentiment(sentence: str, url: str) -> None:
