@@ -52,7 +52,6 @@ def show_result():
 
     # retrieve scraped words from redis
     while cache_redis.get("ws" + url) is None:
-        time.sleep(0.5)
         if cache_redis.get("ws" + url):
             break
 
@@ -67,14 +66,12 @@ def show_result():
 
     # retrieve wordcloud file_id from redis 
     while cache_redis.get("ws" + url + "filename") is None:
-        time.sleep(0.5)
         if cache_redis.get("ws" + url + "filename"):
             break
     wordcloud_image_name = cache_redis.get("ws" + url + "filename")
     wordcloud_image_name = wordcloud_image_name.decode("utf-8")
 
     while cache_redis.get("ws" + url + "wc") is None:
-        time.sleep(0.1)
         if cache_redis.get("ws" + url + "wc"):
             break
 
