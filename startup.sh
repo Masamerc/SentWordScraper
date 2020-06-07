@@ -18,4 +18,3 @@ docker start redis0
 # start worker node for task queue
 echo "Starting Redis Queue Worker..."
 rq worker
-
