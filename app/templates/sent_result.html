@@ -11,7 +11,6 @@
         integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <link rel='stylesheet' href="static/style.css">
     <title>Result</title>
-    <script src="/static/Chart.min.js"></script>
 
 </head>
 
@@ -193,140 +192,71 @@
     </div>
 
 </body>
-
+<script src="/static/Chart.min.js"></script>
+<script src="/static/visualize.js"></script>
 <script>
     //----------------Pie Chart----------------//
-    pieData = {
-        datasets: [{
-            data: [
-                {{ pos_length }},
-                {{ neg_length }}
-            ],
-            backgroundColor: [  
-            'rgb(90, 214, 100, 0.6)',
-            'rgb(235, 92, 82, 0.6)'
-        ],
-        borderColor: '#6B6B6B',
-        borderWidth: 1
-        }],
-
-        labels: [
-            'Positve Sentiments',
-            'Negative Sentiments'
-        ]
-    };
 
     const summaryPieChart = document.getElementById('summaryPie').getContext('2d');
-    const chart0 = new Chart(summaryPieChart, {
-        type: "pie",
-        data: pieData,
-        options: []
-
-    });
+    const pieChart = generatePieChart(summaryPieChart, {{ pos_length }}, {{ neg_length }});
 
 
     //----------------Top 10 Postive/Negative Bar Chart----------------//
 
-    // Creating Colors Array for Bar Charts
-
-    const top_10_compounds = [
+    // Generate data, labels and colors
+    const top10Compounds = [
             {% for sent, compound in top_10_sents %}
             {{ compound }},
             {% endfor %}
             ];
         
 
-    const top_10_colors = [];
+    const top10Colors = [];
     
-    for(const compound of top_10_compounds) {
+    for(const compound of top10Compounds) {
         if(compound > 0) {
-            top_10_colors.push('rgb(90, 214, 100, 0.6)')
+            top10Colors.push('rgb(90, 214, 100, 0.6)')
         } else {
-            top_10_colors.push('rgb(235, 92, 82, 0.6)')
+            top10Colors.push('rgb(235, 92, 82, 0.6)')
         }
     }
 
+    const top10Labels = [
+            {% for sent, compound in top_10_sents %}
+            "{{ sent[:5].strip() }}",
+            {% endfor %}
+        ];
 
-    const worst_10_compounds = [
+
+    const worst10Compounds = [
             {% for sent, compound in worst_10_sents %}
             {{ compound }},
             {% endfor %}
             ];
 
-    const worst_10_colors = [];
+    const worst10Colors = [];
 
-    for(const compound of worst_10_compounds) {
+    for(const compound of worst10Compounds) {
         if(compound > 0) {
-            worst_10_colors.push('rgb(90, 214, 100, 0.6)')
+            worst10Colors.push('rgb(90, 214, 100, 0.6)')
         } else {
-            worst_10_colors.push('rgb(235, 92, 82, 0.6)')
+            worst10Colors.push('rgb(235, 92, 82, 0.6)')
         }
     }
 
-
- 
-    const options = {
-    scales: {
-            yAxes: [{
-                ticks: {
-                    beginAtZero:true
-                }
-            }]
-        }
-    };
-
-    const positiveChart = document.getElementById('posChart').getContext('2d');
-    let chart1 = new Chart(positiveChart, {
-    type: 'bar',
-
-    data: {
-        labels: [
-            {% for sent, compound in top_10_sents %}
-            "{{ sent[:5].strip() }}",
-            {% endfor %}
-        ],
-        datasets: [{
-            label: 'Sentiment Score',
-            backgroundColor: top_10_colors,
-            borderColor: '#6B6B6B',
-            borderWidth: 1,
-            data: [
-            {% for sent, compound in top_10_sents %}
-            {{ compound }},
-            {% endfor %}
-            ]
-        }]
-    },
-
-    options: options
-    });
-
-
-    const negativeChart = document.getElementById('negChart').getContext('2d');
-    let chart2 = new Chart(negativeChart, {
-    type: 'bar',
-
-    data: {
-        labels: [
+    const worst10Labels = [
             {% for sent, compound in worst_10_sents %}
             "{{ sent[:5]}}...",
             {% endfor %}
-        ],
-        datasets: [{
-            label: 'Sentiment Score',
-            backgroundColor: worst_10_colors,
-            borderColor: '#6B6B6B',
-            borderWidth: 1,
-            data: [
-            {% for sent, compound in worst_10_sents %}
-            {{ compound }},
-            {% endfor %}
-            ]
-        }],
-    },
+        ];
 
-    options: options
-    });
+    // generate charts and insert them in the document
+    const positiveChart = document.getElementById('posChart').getContext('2d');
+    const positive10Chart = generateTop10Chart(positiveChart, top10Compounds, top10Labels, top10Colors);
+
+
+    const negativeChart = document.getElementById('negChart').getContext('2d');
+    const worst10Chart = generateTop10Chart(negativeChart, worst10Compounds, worst10Labels, worst10Colors);
 
 </script>
 
