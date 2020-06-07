@@ -79,7 +79,6 @@ def show_result():
     wc_obj.to_file(f"/usr/src/app/app/static/images/wordcloud_images/{wordcloud_image_name}.png")
     print(f"location: /usr/src/app/app/static/images/wordcloud_images/{wordcloud_image_name}.png")
 
-
     return render_template('result.html', url=url, scraped_words=scraped_words, time_stamp=time_stamp, image_name=wordcloud_image_name)
 
 
