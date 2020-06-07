@@ -1,7 +1,7 @@
-
+import datetime
 import pickle
 import requests
-import datetime
+import uuid
 
 from bs4 import BeautifulSoup
 from collections import Counter
@@ -10,6 +10,10 @@ from redis import Redis
 from string import punctuation
 from vaderSentiment.vaderSentiment import SentimentIntensityAnalyzer
 
+# wordcloud generation
+import numpy as np
+from PIL import Image
+from wordcloud import WordCloud
 
 cache_redis = Redis(port=6379)
 
@@ -28,6 +32,15 @@ for symbol in addtional_special_chars:
     punctuation += symbol
 
 
+def generate_masked_wordcloud(frequency_map):
+    # used for shaping wordcloud image
+    mask = np.array(np.array((Image.open("app/static/images/cloud_mask.png"))))
+    
+    wc = WordCloud(background_color="black", scale=2, width=900, height=700, colormap="Purples", margin=5, mask=mask)
+    wc.generate_from_frequencies(frequency_map)
+    return wc
+    
+
 def count_words(url: str) -> None:
     """scrape p tags from url and then count and store each word  """
     print(f"Counting words at {url}")
@@ -42,12 +55,18 @@ def count_words(url: str) -> None:
                               if (word.lower() not in punctuation) and (word.lower() not in stop_words) and (len(word) > 1)]
 
     word_count = Counter(word_tokenized_cleaned)
-
     word_count_list = [(datetime.datetime.now(), word, count, url)
                        for word, count in word_count.items()]
     cache_redis.setex("ws" + url, 60, pickle.dumps(word_count_list))
 
-    print(f'Total Words: {len(word_count)}')
+    file_id = uuid.uuid4()
+
+    # generate and save wordcloud
+    wc = generate_masked_wordcloud(word_count)
+    wc.to_file(f"app/static/images/wordcloud_images/{file_id}.png")
+
+    # sending wordcloud file_id for retrieval in Flask view 
+    cache_redis.setex("ws" + url + "filename", 60, str(file_id))
 
 
 def score_sentiment(sentence: str, url: str) -> None:
