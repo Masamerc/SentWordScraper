@@ -34,7 +34,7 @@ for symbol in addtional_special_chars:
 
 def generate_masked_wordcloud(frequency_map):
     # used for shaping wordcloud image
-    mask = np.array(np.array((Image.open("app/static/images/cloud_mask.png"))))
+    mask = np.array(np.array((Image.open("/usr/src/app/app/static/images/cloud_mask.png"))))
     
     wc = WordCloud(background_color="black", scale=2, width=900, height=700, colormap="Purples", margin=5, mask=mask)
     wc.generate_from_frequencies(frequency_map)
@@ -63,6 +63,7 @@ def count_words(url: str) -> None:
 
     # generate and save wordcloud
     wc = generate_masked_wordcloud(word_count)
+    wc.to_file(f"/usr/src/app/app/static/images/wordcloud_images/{file_id}.png")
     
     # sending wordcloud file_id for retrieval in Flask view 
     cache_redis.setex("ws" + url + "filename", 60, str(file_id))
