@@ -8,7 +8,6 @@
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
     integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
   <link rel='stylesheet' href="static/style.css">
-  <script src="/static/Chart.min.js"></script>
   <title>Word Counter Result</title>
 </head>
 
@@ -32,6 +31,8 @@
     </div>
   </nav>
 
+
+  
 
   <div class="container">
     <div class="row">
@@ -58,6 +59,15 @@
             </div>
           </div>
         </div>
+
+
+        <div class="card mt-3">
+            <div class="card-body">
+              <h4 class="mt-3">WordCloud</h4>
+              <hr>
+                <image class="wordcloud" src="static/images/wordcloud_images/{{ image_name }}.png"></image>
+            </div>
+          </div>
         
         <div class="card mt-3" style="padding-bottom: 100px;">
           <div class="card-body">
@@ -98,45 +108,19 @@
     <p> <strong>Masahiro Mark Fukui | </strong> All features and codes are licensed under MIT License</p>
 </div>
 </body>
+<script src="/static/Chart.min.js"></script>
+<script src="/static/visualize.js"></script>
 <script>
 
-  const options = {
-      // All of my other bar chart option here
-      scales: {
-              yAxes: [{
-                  ticks: {
-                      beginAtZero:true
-                  }
-              }]
-          }
-      };
-
-  const top10Words = [
+const top10Words = [
     {% for word, count in scraped_words[:10] %}
     ["{{ word }}", {{ count }}],
     {% endfor %}
   ];
-
-  console.log(top10Words);
   
-  const top10BarChart = document.querySelector("#top10");
+const top10BarChart = document.querySelector("#top10");
+const chart = generateBarChart(top10BarChart, top10Words);
 
-  let chart = new Chart(top10BarChart, {
-    type: 'bar',
-
-    data: {
-        labels: top10Words.map(tuple => tuple[0]),
-        datasets: [{
-            label: 'Count',
-            backgroundColor: "rgba(86, 16, 151, 0.6)",
-            borderColor: 'rgba(106, 103, 110, 1)',
-            borderWidth: 2,
-            data: top10Words.map(tuple => tuple[1])
-        }]
-    },
-
-    options: options
-    });
 </script>
 
 </html>

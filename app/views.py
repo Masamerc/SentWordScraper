@@ -1,10 +1,11 @@
 import pickle
 import time
+import os
 
 from app import app
 from app import q
 from app.tasks import count_words, handle_sentiment
-from flask import render_template, request, redirect, url_for
+from flask import render_template, request, redirect, url_for, after_this_request
 from redis import Redis
 from time import strftime
 
@@ -49,8 +50,8 @@ def show_result():
     """
     url = request.args["url"]
 
+    # retrieve scraped words from redis
     while cache_redis.get("ws" + url) is None:
-        time.sleep(0.5)
         if cache_redis.get("ws" + url):
             break
 
@@ -63,7 +64,22 @@ def show_result():
         time_stamp = ts
     scraped_words.sort(key=lambda x: x[1], reverse=True)
 
-    return render_template('result.html', url=url, scraped_words=scraped_words, time_stamp=time_stamp)
+    # retrieve wordcloud file_id from redis 
+    while cache_redis.get("ws" + url + "filename") is None:
+        if cache_redis.get("ws" + url + "filename"):
+            break
+    wordcloud_image_name = cache_redis.get("ws" + url + "filename")
+    wordcloud_image_name = wordcloud_image_name.decode("utf-8")
+
+    while cache_redis.get("ws" + url + "wc") is None:
+        if cache_redis.get("ws" + url + "wc"):
+            break
+
+    wc_obj = pickle.loads(cache_redis.get("ws" + url + "wc"))
+    wc_obj.to_file(f"/usr/src/app/app/static/images/wordcloud_images/{wordcloud_image_name}.png")
+    print(f"location: /usr/src/app/app/static/images/wordcloud_images/{wordcloud_image_name}.png")
+
+    return render_template('result.html', url=url, scraped_words=scraped_words, time_stamp=time_stamp, image_name=wordcloud_image_name)
 
 
 @app.route('/add-sent-task', methods=["GET", "POST"])
