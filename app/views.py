@@ -58,24 +58,28 @@ def show_result():
 
     scraper_result_data = pickle.loads(cache_redis.get("ws" + url))
 
-    scraped_words = []
-    for data in scraper_result_data:
-        ts, word, count, source = data
-        scraped_words.append((word, count))
-        time_stamp = ts
-    scraped_words.sort(key=lambda x: x[1], reverse=True)
+    if scraper_result_data:
+        scraped_words = []
+        for data in scraper_result_data:
+            ts, word, count, source = data
+            scraped_words.append((word, count))
+            time_stamp = ts
+        scraped_words.sort(key=lambda x: x[1], reverse=True)
 
-    mylogger.info(f"Scraped words: {len(scraped_words)} words")
+        mylogger.info(f"Scraped words: {len(scraped_words)} words")
 
-    # retrieve wordcloud file_id from redis 
-    while cache_redis.get("ws" + url + "filename") is None:
-        if cache_redis.get("ws" + url + "filename"):
-            break
-    wordcloud_image_name = cache_redis.get("ws" + url + "filename")
-    wordcloud_image_name = wordcloud_image_name.decode("utf-8")
+        # retrieve wordcloud file_id from redis
+
+        while cache_redis.get("ws" + url + "filename") is None:
+            if cache_redis.get("ws" + url + "filename"):
+                break
+        wordcloud_image_name = cache_redis.get("ws" + url + "filename")
+        wordcloud_image_name = wordcloud_image_name.decode("utf-8")
 
 
-    return render_template('result.html', url=url, scraped_words=scraped_words, time_stamp=time_stamp, image_name=wordcloud_image_name)
+        return render_template('result.html', url=url, scraped_words=scraped_words, time_stamp=time_stamp, image_name=wordcloud_image_name)
+
+    return render_template('no_results.html')
 
 
 @app.route('/add-sent-task', methods=["GET", "POST"])
@@ -118,28 +122,31 @@ def show_sent_result():
 
     sentiment_list_data = pickle.loads(cache_redis.get("ss" + url))
 
-    scraped_sents = []
+    if sentiment_list_data:
+        scraped_sents = []
 
-    for data in sentiment_list_data:
-        sent, pos, neu, neg, compound, source, ts = data
-        scraped_sents.append((sent, compound))
-        time_stamp = ts
+        for data in sentiment_list_data:
+            sent, pos, neu, neg, compound, source, ts = data
+            scraped_sents.append((sent, compound))
+            time_stamp = ts
 
-    scraped_sents.sort(key=lambda x: x[1], reverse=True)
-    scraped_sents = [sent_tuple for sent_tuple in scraped_sents if sent_tuple[1] != 0]
+        scraped_sents.sort(key=lambda x: x[1], reverse=True)
+        scraped_sents = [sent_tuple for sent_tuple in scraped_sents if sent_tuple[1] != 0]
 
-    mylogger.info(f"Scraped sentiments: {len(scraped_sents)} sentiments")
+        mylogger.info(f"Scraped sentiments: {len(scraped_sents)} sentiments")
 
-    total_compound = sum((row[1] for row in scraped_sents))
-    total_records = len(scraped_sents)
-    average_compound = round(total_compound / total_records, 4)
-    total_pos = [row[1] for row in scraped_sents if row[1] >= 0]
-    total_neg = [row[1] for row in scraped_sents if row[1] < 0]
+        total_compound = sum((row[1] for row in scraped_sents))
+        total_records = len(scraped_sents)
+        average_compound = round(total_compound / total_records, 4)
+        total_pos = [row[1] for row in scraped_sents if row[1] >= 0]
+        total_neg = [row[1] for row in scraped_sents if row[1] < 0]
 
-    top_10_sents = scraped_sents[:10]
-    worst_10_sents = scraped_sents[-10:][::-1]
+        top_10_sents = scraped_sents[:10]
+        worst_10_sents = scraped_sents[-10:][::-1]
 
-    return render_template('sent_result.html', url=url, scraped_sents=scraped_sents,
-                           time_stamp=time_stamp, average_compound=average_compound,
-                           top_10_sents=top_10_sents, worst_10_sents=worst_10_sents, total_records=total_records,
-                           pos_length=len(total_pos), neg_length=len(total_neg))
+        return render_template('sent_result.html', url=url, scraped_sents=scraped_sents,
+                            time_stamp=time_stamp, average_compound=average_compound,
+                            top_10_sents=top_10_sents, worst_10_sents=worst_10_sents, total_records=total_records,
+                            pos_length=len(total_pos), neg_length=len(total_neg))
+                            
+    return render_template('no_results.html')

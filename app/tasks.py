@@ -36,7 +36,7 @@ def generate_masked_wordcloud(frequency_map):
     # used for shaping wordcloud image
     mask = np.array(np.array((Image.open("app/static/images/cloud_mask.png"))))
     
-    wc = WordCloud(background_color="black", scale=2, width=900, height=700, colormap="Purples", margin=5, mask=mask)
+    wc = WordCloud(background_color="black", scale=2, width=700, height=500, colormap="Purples", margin=5, mask=mask)
     wc.generate_from_frequencies(frequency_map)
     return wc
     
@@ -62,11 +62,15 @@ def count_words(url: str) -> None:
     file_id = uuid.uuid4()
 
     # generate and save wordcloud
-    wc = generate_masked_wordcloud(word_count)
-    wc.to_file(f"app/static/images/wordcloud_images/{file_id}.png")
+    if word_count:
+        wc = generate_masked_wordcloud(word_count)
+        wc.to_file(f"app/static/images/wordcloud_images/{file_id}.png")
 
-    # sending wordcloud file_id for retrieval in Flask view 
-    cache_redis.setex("ws" + url + "filename", 60, str(file_id))
+        # sending wordcloud file_id for retrieval in Flask view 
+        cache_redis.setex("ws" + url + "filename", 60, str(file_id))
+    
+    else:
+        cache_redis.setex("ws" + url + "filename", 60, "no_image")
 
 
 def score_sentiment(sentence: str, url: str) -> None:
