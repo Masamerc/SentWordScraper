@@ -1,7 +1,8 @@
-flask
-rq
 redis
-bs4
-nltk
 vaderSentiment
+nltk
+bs4
 requests
+rq
+flask
+wordcloud
