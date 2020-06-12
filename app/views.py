@@ -8,10 +8,9 @@ from app.tasks import count_words, handle_sentiment
 from flask import render_template, request, redirect, url_for, after_this_request
 from redis import Redis
 from time import strftime
-
+from app.utils.logger import mylogger
 
 cache_redis = Redis(port=6379)
-
 
 @app.route('/')
 def index():
@@ -35,11 +34,12 @@ def add_task():
             jobs = q.jobs
             q_length = len(q)
             message = f"Task queued at {task.enqueued_at.strftime('%a %d %b %Y %H:%M')}. {q_length} Jobs Queued"
+            mylogger.info(f"Job enqueued: {message}")
 
             # redirects to "/result" route and pass on "url"
             return redirect(url_for(".show_result", url=url))
 
-    return render_template('add_task.html', message=message, jobs=jobs)
+    return render_template('add_task.html', jobs=jobs)
 
 
 @app.route('/result', methods=["GET", "POST"])
@@ -49,10 +49,10 @@ def show_result():
     Sends data from word-scraper to result.html
     """
     url = request.args["url"]
+    mylogger.info(f"word counter result from URL: {url}")
 
     # retrieve scraped words from redis
     while cache_redis.get("ws" + url) is None:
-        time.sleep(0.5)
         if cache_redis.get("ws" + url):
             break
 
@@ -65,9 +65,10 @@ def show_result():
         time_stamp = ts
     scraped_words.sort(key=lambda x: x[1], reverse=True)
 
+    mylogger.info(f"Scraped words: {len(scraped_words)} words")
+
     # retrieve wordcloud file_id from redis 
     while cache_redis.get("ws" + url + "filename") is None:
-        time.sleep(0.5)
         if cache_redis.get("ws" + url + "filename"):
             break
     wordcloud_image_name = cache_redis.get("ws" + url + "filename")
@@ -94,11 +95,11 @@ def add_sent_task():
             jobs = q.jobs
             q_length = len(q)
             message = f"Task queued at {task.enqueued_at.strftime('%a %d %b %Y %H:%M')}. {q_length} Jobs Queued"
-
+            mylogger.info(f"Job enqueued: {message}")
             # redirects to "/result" route and pass on "url"
             return redirect(url_for(".show_sent_result", url=url))
 
-    return render_template('add_sent_task.html', message=message, jobs=jobs)
+    return render_template('add_sent_task.html', jobs=jobs)
 
 
 @app.route('/sent-result', methods=["GET", "POST"])
@@ -108,6 +109,7 @@ def show_sent_result():
     Loads data from sentiment-scraper and sends it to sent_result.html
     """
     url = request.args['url']
+    mylogger.info(f"sent analyzer result from URL: {url}")
 
     while cache_redis.get("ss" + url) is None:
         time.sleep(0.5)
@@ -125,6 +127,8 @@ def show_sent_result():
 
     scraped_sents.sort(key=lambda x: x[1], reverse=True)
     scraped_sents = [sent_tuple for sent_tuple in scraped_sents if sent_tuple[1] != 0]
+
+    mylogger.info(f"Scraped sentiments: {len(scraped_sents)} sentiments")
 
     total_compound = sum((row[1] for row in scraped_sents))
     total_records = len(scraped_sents)

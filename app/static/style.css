@@ -95,7 +95,7 @@ a {
     color: rgb(255, 255, 255);
     font-size: small;
     padding-top: 10px;
-    padding-bottom: -10px;
+    /* padding-bottom: -10px; */
 }
 .footer-for-result {
     position: relative;
