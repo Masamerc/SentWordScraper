@@ -3,8 +3,12 @@
     height: 800px;
     overflow: auto;
     }
+html, body {
+    min-height: 100%;
+}
+
 body {
-    background-color: rgb(240, 240, 240);
+    background-color: rgb(240, 240, 240)
 }
 
 h4 {
@@ -84,38 +88,19 @@ a {
 
 .footer {
     position: fixed;
-    left: 0;
     bottom: 0;
+    height: 65px;
     width: 100%;;
     color: rgb(255, 255, 255);
     text-align: center;
-    margin-top: 50px;
+    margin-top: 20px;
   }
 .footer p {
     color: rgb(255, 255, 255);
     font-size: small;
     padding-top: 10px;
-    /* padding-bottom: -10px; */
 }
-.footer-for-result {
-    position: relative;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    width: 100%;;
-    color: rgb(255, 255, 255);
-    text-align: center;
-    height: 50px;
-    margin-top: 50px;
-  }
 
-.footer-for-result p {
-    color: rgb(255, 255, 255);
-    font-size: small;
-    padding-top: 10px;
-    padding-bottom: 10px;
-
-}
 
 a.bottom-link {
     font-weight: normal;

@@ -1,3 +1,4 @@
 env/
 .vscode/
 app.log
+wordcloud_images/*
