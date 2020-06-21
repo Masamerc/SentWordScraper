@@ -1,13 +1,8 @@
 # SentWordScraper - with Docker 🐋
 *for non-docker implementation please switch to no-docker branch
-<center>
-
-![logo](/app/static/images/logo.png)
-
-</center>
 
 <p align="center">
-  <img width="460" height="300" src="/app/static/images/logo.png">
+  <img width="320" height="200" src="/app/static/images/logo.png">
 </p>
 
 # 1. Introduction
