@@ -6,6 +6,10 @@
 
 </center>
 
+<p align="center">
+  <img width="460" height="300" src="/app/static/images/logo.png">
+</p>
+
 # 1. Introduction
 
 This is a little web application I built for fun.
