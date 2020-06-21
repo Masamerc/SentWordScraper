@@ -1,34 +1,50 @@
 version: "3"
-services:
-    redis0:
-        image: "redis:alpine"
-        ports:
-            - "6378:6379"
 
-    redis1:
+services:
+
+    redis:
         image: "redis:alpine"
+        container_name: redis
         ports:
             - "6379:6379"
 
     redis-queue:
-        image: "rq_python:latest"
-        command: rq worker --url redis://redis1:6379
+        build: .
+        container_name: redis-queue
+        volumes:
+            - .:/usr/src/app
+        command: rq worker --url redis://redis:6379
         depends_on:
-            - redis1
-            - redis0
+            - redis
+
     flask:
-        image: "rq_python:latest"
-        command: >
-            sh -c "service cron start &&
-                   echo '0 * * * * rm -rf usr/src/app/app/static/images/wordcloud_images/*' > mycron &&
-                   crontab mycron &&
-                   rm mycron &&
-                   python run.py "
-        ports:
-            - 5000:5000
+        build: .
+        container_name: flask
+        restart: always
+        volumes:
+            - .:/usr/src/app
+        command: gunicorn -w 3 run:app -b "0.0.0.0:5000"
+
+        # ports:
+        #     - 5000:5000
+
+        # expose to internal containers
+        expose:
+            - 5000
         depends_on:
-            - redis1
-            - redis0
+            - redis
+
+    nginx:
+        build: ./nginx
+        container_name: nginx
+        restart: always
+        volumes:
+            - ./app/static:/usr/src/app/app/static
+        ports:
+            - 80:80
+        depends_on: 
+            - flask
+
      
 
 
