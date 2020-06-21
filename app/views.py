@@ -128,8 +128,6 @@ def show_sent_result():
         scraped_sents.sort(key=lambda x: x[1], reverse=True)
         scraped_sents = [sent_tuple for sent_tuple in scraped_sents if sent_tuple[1] != 0]
 
-        mylogger.info(f"Scraped sentiments: {len(scraped_sents)} sentiments")
-
         total_compound = sum((row[1] for row in scraped_sents))
         total_records = len(scraped_sents)
         average_compound = round(total_compound / total_records, 4)
