@@ -25,10 +25,7 @@ services:
             - .:/usr/src/app
         command: gunicorn -w 3 run:app -b "0.0.0.0:5000"
 
-        # ports:
-        #     - 5000:5000
-
-        # expose to internal containers
+        # expose port to internal containers
         expose:
             - 5000
         depends_on:
