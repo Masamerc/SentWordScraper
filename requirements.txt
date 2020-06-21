@@ -6,3 +6,4 @@ requests
 rq
 flask
 wordcloud
+gunicorn
