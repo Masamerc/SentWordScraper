@@ -57,13 +57,13 @@ rq worker
 # 4. Sample Results
 
 <p align="center">
-  <img width="320" height="200" src="/app/static/images/ss1.png">
+  <img width="600" height="800" src="/app/static/images/ss1.png">
 </p>
 
 <p align="center">
-  <img width="320" height="200" src="/app/static/images/ss2.png">
+  <img width="600" height="700" src="/app/static/images/ss2.png">
 </p>
 
 <p align="center">
-  <img width="320" height="200" src="/app/static/images/ss3.png">
+  <img width="600" height="400" src="/app/static/images/ss3.png">
 </p>
