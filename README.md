@@ -8,13 +8,13 @@
 # 1. Introduction
 
 This is a little web application I built for fun.
-The app is deployed at [URL].
+The app is avalilable at [URL].
 
 Main two functionalities are:
 ## WordScraper
-Description Here
+Scrapes texts from the supplied URL and then counts words, visualizes the result, and generates a wordcloud image.
 ## SentScraper
-Description Here
+Scrapes texts from the supplied URL, analyzes the sentiment of each sentence and then visualizes the result.
 
 
 The project was made possible by:
@@ -43,5 +43,3 @@ It's likely another process is already using that port, in which case try killin
 
 <br>
 
-
-# 3. Hello
