@@ -43,3 +43,16 @@ It's likely another process is already using that port, in which case try killin
 
 <br>
 
+# 3. Sample Results
+
+<p align="center">
+  <img width="320" height="200" src="/app/static/images/ss1.png">
+</p>
+
+<p align="center">
+  <img width="320" height="200" src="/app/static/images/ss2.png">
+</p>
+
+<p align="center">
+  <img width="320" height="200" src="/app/static/images/ss3.png">
+</p>

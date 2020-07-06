@@ -1,0 +1,6 @@
+app.utils.logger - 2020-07-07 00:00:32,046 - INFO: Job enqueued: Task queued at Mon 06 Jul 2020 15:00. 0 Jobs Queued
+app.utils.logger - 2020-07-07 00:00:32,081 - INFO: word counter result from URL: https://www.polygon.com/reviews/2019/1/22/18192509/resident-evil-2-remake-review
+app.utils.logger - 2020-07-07 00:00:33,999 - INFO: Scraped words: 448 words
+app.utils.logger - 2020-07-07 00:01:29,533 - INFO: Job enqueued: Task queued at Mon 06 Jul 2020 15:01. 0 Jobs Queued
+app.utils.logger - 2020-07-07 00:01:29,551 - INFO: sent analyzer result from URL: https://www.politico.com/news/2020/03/20/trump-hypes-unproven-coronavirus-drugs-139525
+app.utils.logger - 2020-07-07 00:01:31,562 - INFO: Scraped sentiments: 25 sentiments
