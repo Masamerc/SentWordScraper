@@ -46,13 +46,13 @@ It's likely another process is already using that port, in which case try killin
 # 3. Sample Results
 
 <p align="center">
-  <img width="400" height="600" src="/app/static/images/ss1.png">
+  <img width="600" height="700" src="/app/static/images/ss1.png">
 </p>
 
 <p align="center">
-  <img width="400" height="600" src="/app/static/images/ss2.png">
+  <img width="600" height="700" src="/app/static/images/ss2.png">
 </p>
 
 <p align="center">
-  <img width="400" height="600" src="/app/static/images/ss3.png">
+  <img width="600" height="700" src="/app/static/images/ss3.png">
 </p>
