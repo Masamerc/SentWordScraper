@@ -54,5 +54,5 @@ It's likely another process is already using that port, in which case try killin
 </p>
 
 <p align="center">
-  <img width="600" height="700" src="/app/static/images/ss3.png">
+  <img width="600" height="500" src="/app/static/images/ss3.png">
 </p>
