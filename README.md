@@ -1,4 +1,4 @@
-# SentWordScraper - with Docker 🐋
+# [SentWordScraper]((http://li1872-187.members.linode.com/)) - with Docker 🐋
 *for non-docker implementation please switch to no-docker branch
 
 <p align="center">
@@ -8,7 +8,7 @@
 # 1. Introduction
 
 This is a little web application I built for fun.
-The app is avalilable at [URL].
+The app is avalilable [HERE](http://li1872-187.members.linode.com/).
 
 Main two functionalities are:
 ## WordScraper
