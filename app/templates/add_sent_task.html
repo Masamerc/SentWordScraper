@@ -9,7 +9,8 @@
   <!-- Bootstrap CSS -->
 <link rel="icon" href="static/images/favicon.png">
 <link rel="preconnect" href="https://fonts.gstatic.com">
-<link href="https://fonts.googleapis.com/css2?family=Russo+One&display=swap" rel="stylesheet">
+   <link href="https://fonts.googleapis.com/css2?family=Russo+One&display=swap" rel="stylesheet">
+   <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
     integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
   <link rel="stylesheet" href="static/style.css">
@@ -49,7 +50,7 @@
           <div class="card-body">
             <form action="/add-sent-task">
               <div class="form-group">
-                <label>Scrapes texts from URL and analyzes the result. The output will be visualized. <strong style="color: blueviolet;">Have fun!</strong></label>
+                <label style="font-family: 'JetBrains Mono', monospace;">Scrapes texts from URL and analyzes the result. The output will be visualized. <strong style="color: blueviolet;">Have fun!</strong></label>
                 <input type="text" class="form-control" name="url" placeholder="Enter URL" required>
                 {% if message %}
                 <small id="emailHelp" class="form-text text-muted">{{ message }}</small>

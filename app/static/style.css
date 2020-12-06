@@ -11,6 +11,18 @@ h4 {
     font-weight: bold;
 }
 
+p {
+    font-family: 'JetBrains Mono', monospace;
+}
+
+th {
+    font-family: 'JetBrains Mono', monospace;
+}
+
+tr {
+    font-family: 'JetBrains Mono', monospace;
+}
+
 img.logo{
     width: 60px; 
     height: 25px;
