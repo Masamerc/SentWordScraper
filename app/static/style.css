@@ -79,20 +79,19 @@ a {
 
 
 .bg-primary {
-    background-color:#561097 !important;
+    background-color:rgb(240, 240, 240) !important;
 }
 
 .footer {
-    position: fixed;
     bottom: 0;
     height: 65px;
     width: 100%;;
-    color: rgb(255, 255, 255);
+    color: rgb(240, 240, 240);
     text-align: center;
     margin-top: 20px;
   }
 .footer p {
-    color: rgb(255, 255, 255);
+    color: #6e6767;
     font-size: small;
     padding-top: 10px;
 }

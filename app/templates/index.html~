@@ -7,14 +7,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
     <!-- Bootstrap CSS -->
-   <link rel="icon" href="static/images/favicon.png">
-   <link rel="preconnect" href="https://fonts.gstatic.com">
-   <link href="https://fonts.googleapis.com/css2?family=Russo+One&display=swap" rel="stylesheet">
-
-   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
         integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-   <link rel='stylesheet' href="static/style.css">
-    
+    <link rel='stylesheet' href="static/style.css">
     <title>SWS - SentWordScraper</title>
 </head>
 
@@ -45,7 +40,7 @@
             <div class="col">
                 <div class="card mt-3">
                     <div class="card-body">
-                        <h4 style="font-family: 'Russo One', sans-serif; color: #484848">SentWordScraper</h4>
+                        <h4>SentWordScraper</h4>
                         <hr>
                         <img class="logo-large" src="static/images/logo.png">
 
@@ -62,12 +57,12 @@
                         </ul>
                         </p>
                         <hr>
-                        <span class="main-link" style="font-family: 'Russo One', sans-serif;"><a href="/add-task">Scrape Words</a></span>
+                        <span class="main-link"><a href="/add-task">Scrape Words</a></span>
                         <br>
                         <p>
                             Scrapes texts from the supplied URL and then counts words, visualizes the data,<br> and then generates a wordcloud image
                         </p>
-                        <span class="main-link" style="font-family: 'Russo One', sans-serif;"><a href="/add-sent-task">Scrape Sentences</a></span>
+                        <span class="main-link"><a href="/add-sent-task">Scrape Sentences</a></span>
                         <p>
                             Scrapes texts from the supplied URL,</br>
                             analyzes the sentiment of each sentence and then visualizes the result.
@@ -85,7 +80,7 @@
                 <!-- Average Score: Changes color depending on value -->
                 <div class="card mt-3">
                     <div class="card-body">
-                        <h4 style="font-family: 'Russo One', sans-serif; color: #484848">Links</h4>
+                        <h4>Links</h4>
                         <hr>
                         <div class="row" style="padding-left: 10px;">
                             <div class=".col-6 .col-sm-3">
@@ -114,7 +109,7 @@
             </div>
         </div>
     </div>
-    <footer class="footer bg-primary">
+    <footer class="footer bg-primary" style="position: static;">
         <div class="container">
             <p> <strong>© 2020 Masahiro Mark Fukui | </strong> All features and codes are licensed under MIT License<br>Logo Design by: Yoshimitsu Tomita</p>
         </div>

@@ -5,6 +5,7 @@ services:
     redis:
         image: "redis:alpine"
         container_name: redis
+        command: redis-server --requirepass Masa1014
         ports:
             - "6379:6379"
 
@@ -13,7 +14,7 @@ services:
         container_name: redis-queue
         volumes:
             - .:/usr/src/app
-        command: rq worker --url redis://redis:6379
+        command: rq worker --url redis://:Masa1014@redis:6379
         depends_on:
             - redis
 
@@ -28,8 +29,7 @@ services:
         # expose port to internal containers
         expose:
             - 5000
+        ports:
+            - 5000:5000
         depends_on:
             - redis
-     
-
-

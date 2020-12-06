@@ -7,6 +7,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
   <!-- Bootstrap CSS -->
+<link rel="icon" href="static/images/favicon.png">
+<link rel="preconnect" href="https://fonts.gstatic.com">
+<link href="https://fonts.googleapis.com/css2?family=Russo+One&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
     integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
   <link rel="stylesheet" href="static/style.css">
@@ -41,7 +44,7 @@
   <div class="container">
     <div class="row">
       <div class="col">
-        <h4 class="mt-3">SentScraper</h4>
+        <h4 class="mt-3" style="font-family: 'Russo One', sans-serif; color: #484848">SentScraper</h4>
         <div class="card mt-3">
           <div class="card-body">
             <form action="/add-sent-task">
@@ -60,30 +63,6 @@
     </div>
   </div>
 
-  <div class="container">
-    <div class="row">
-      <div class="col">
-        <h5 class="mt-3 mb-3">Job queue</h5>
-        {% if jobs %}
-        {% for job in jobs %}
-        <div class="card mb-3">
-          <div class="card-body">
-            <h6>{{ job.func_name }}</h6>
-            <p>Args: {{ job.args }}</p>
-            <small class="text-muted d-block">Job ID: {{ job.id }}</small>
-            <small class="text-muted d-block">Status: {{ job.status }}</small>
-            <small class="text-muted d-block">Created at: {{ job.created_at.strftime('%a, %d %b %Y %H:%M:%S') }}</small>
-            <small class="text-muted d-block">Enqueued at:
-              {{ job.enqueued_at.strftime('%a, %d %b %Y %H:%M:%S') }}</small>
-          </div>
-        </div>
-        {% endfor %}
-        {% else %}
-        <p>No jobs in the queue</p>
-        {% endif %}
-      </div>
-    </div>
-  </div>
   <footer class="footer bg-primary">
     <div class="container">
         <p> <strong>© 2020 Masahiro Mark Fukui | </strong> All features and codes are licensed under MIT License<br>Logo Design by: Yoshimitsu Tomita</p>

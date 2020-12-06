@@ -15,7 +15,7 @@ import numpy as np
 from PIL import Image
 from wordcloud import WordCloud
 
-cache_redis = Redis(host="redis", port=6379)
+cache_redis = Redis(host="redis", port=6379, password='Masa1014')
 
 HEADERS = {
     'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/76.0.3809.132 Safari/537.36',
