@@ -46,7 +46,7 @@ It's likely another process is already using that port, in which case try killin
 # 3. Sample Results
 
 <p align="center">
-  <img src="/app/static/images/demo_imgs/sent_header_piechart.png">
+  <img style="width:40px; height:auto;"src="/app/static/images/demo_imgs/sent_header_piechart.png">
 </p>
 
 <p align="center">
