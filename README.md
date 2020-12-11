@@ -46,19 +46,16 @@ It's likely another process is already using that port, in which case try killin
 # 3. Sample Results
 
 <p align="center">
-  <img style="width:400px; height:auto;"src="/app/static/images/demo_imgs/sent_header_piechart.png">
+  <img width="600" height="auto" src="/app/static/images/demo_imgs/sent_header_piechart.png">
 </p>
 
 <p align="center">
-  <img src="/app/static/images/demo_imgs/sent_top_10.png">
-</p><p align="center">
-  <img src="/app/static/images/demo_imgs/sent_worst_10.png">
+  <img  width="600" height="auto" src="/app/static/images/demo_imgs/sent_top_10.png">
+</p>
+<p align="center">
+  <img width="600" height="auto" src="/app/static/images/demo_imgs/sent_worst_10.png">
 </p>
 
 <p align="center">
   <img width="600" height="auto" src="/app/static/images/demo_imgs/wc_example.png">
-</p>
-
-<p align="center">
-  <img width="600" height="auto" src="/app/static/images/demo_imgs/wc_barchart.png">
 </p>
