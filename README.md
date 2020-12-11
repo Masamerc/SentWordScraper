@@ -56,9 +56,9 @@ It's likely another process is already using that port, in which case try killin
 </p>
 
 <p align="center">
-  <img width="600" height="700" src="/app/static/images/demo_imgs/wc_example.png">
+  <img width="600" height="auto" src="/app/static/images/demo_imgs/wc_example.png">
 </p>
 
 <p align="center">
-  <img width="600" height="400" src="/app/static/images/demo_imgs/wc_barchart.png">
+  <img width="600" height="auto" src="/app/static/images/demo_imgs/wc_barchart.png">
 </p>
