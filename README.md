@@ -2,7 +2,7 @@
 *for non-docker implementation please switch to no-docker branch
 
 <p align="center">
-  <img width="320" height="200" src="/app/static/images/logo.png">
+  <img width="250" height="auto" src="/app/static/images/logo.png">
 </p>
 
 # 1. Introduction
